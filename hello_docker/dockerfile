@@ -1,0 +1,14 @@
+FROM ubuntu:16.04
+MAINTAINER Garrett Rudisill garrett.rudisill@gmail.com
+
+RUN apt-get update
+RUN apt-get upgrade -y
+RUN apt-get install htop
+RUN apt-get install python -y
+RUN apt-get install gfortran -y
+
+ADD hi.py /
+ADD testsh.sh /
+ADD ftest.f90 /
+
+CMD bash testsh.sh
