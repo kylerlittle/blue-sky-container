@@ -1,0 +1,16 @@
+FROM ubuntu:16.04
+MAINTAINER Jeff Kremer Jeffrey.Kremer.iii@gmail.com
+
+RUN apt-get update 
+RUN apt-get upgrade -y
+RUN apt-get install gcc -y 
+RUN apt-get install htop
+RUN apt-get install python -y
+RUN apt-get install gfortran -y
+
+ADD hi.py /
+ADD fortranTest.f90 /
+ADD cTest.c /
+ADD testsh.sh /
+
+CMD bash testsh.sh
