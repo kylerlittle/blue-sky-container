@@ -8,8 +8,7 @@ RUN apt-get install python -y
 RUN apt-get install gfortran -y
 
 ADD package_notes.txt /
-
-RUN apt-get install $(grep -vE "^\s*#" package_notes.txt  | tr "\n" " ") -y
+RUN apt-get update && apt-get install $(grep -vE "^\s*#" package_notes.txt  | tr "\n" " ") -y
 
 
 
