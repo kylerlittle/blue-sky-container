@@ -1,0 +1,276 @@
+MAP
+    NAME "SampleMap"
+    STATUS ON
+    SHAPEPATH "/projects/mapserver/shapefiles" #Make sure this points to the root of the data folder (where all your shape or raster files are)
+    SIZE 525 400
+    IMAGECOLOR 255 255 255
+    IMAGETYPE png
+    EXTENT -125 16 -65 59
+    UNITS dd
+    PROJECTION
+        "init=epsg:4326"
+    END #end projection
+    DEBUG ON
+
+    LAYER
+        NAME 'World30'
+        GROUP 'World30'
+        DATA 'World30'
+        PROJECTION
+            "init=epsg:4326"
+        END #end projection
+        TYPE polygon
+        STATUS ON
+        TOLERANCE 8 #default is 3 for raster, 0 for vector
+        CLASS
+            STYLE
+                ANTIALIAS false
+                COLOR 190 232 255
+                BACKGROUNDCOLOR 190 232 255 # not sure about this one
+                OUTLINECOLOR 0 0 0
+            END #end style
+        END #end class
+    END #end layer
+
+    LAYER
+        NAME 'Countries'
+        GROUP 'Countries'
+        DATA 'Countries'
+        PROJECTION
+            "init=epsg:4326"
+        END #end projection
+        TYPE polygon
+        STATUS ON
+        TOLERANCE 8 #default is 3 for raster, 0 for vector
+        CLASS
+            STYLE
+                ANTIALIAS false
+                COLOR 225 225 225
+                BACKGROUNDCOLOR 225 225 225 # not sure about this one
+                OUTLINECOLOR 0 0 0
+            END #end style
+        END #end class
+    END #end layer
+
+    LAYER
+        NAME 'MexicoSimple'
+        GROUP 'MexicoSimple'
+        DATA 'MexicoSimple'
+        PROJECTION
+            "init=epsg:4326"
+        END #end projection
+        TYPE polygon
+        STATUS ON
+        TOLERANCE 8 #default is 3 for raster, 0 for vector
+        CLASS
+            STYLE
+                ANTIALIAS false
+                COLOR 225 225 225
+                OUTLINECOLOR 0 0 0
+            END #end style
+        END #end class
+    END #end layer
+
+    LAYER
+        NAME 'CanadaSimple'
+        GROUP 'CanadaSimple'
+        DATA 'CanadaSimple'
+        PROJECTION
+            "init=epsg:4326"
+        END #end projection
+        TYPE polygon
+        STATUS ON
+        TOLERANCE 8 #default is 3 for raster, 0 for vector
+        CLASS
+            STYLE
+                ANTIALIAS false
+                COLOR 225 225 225
+                OUTLINECOLOR 0 0 0
+            END #end style
+        END #end class
+    END #end layer
+
+    LAYER
+        NAME 'States_USA'
+        GROUP 'States_USA'
+        DATA 'States_USA'
+        PROJECTION
+            "init=epsg:4269"
+        END #end projection
+        TYPE polygon
+        STATUS ON
+        TOLERANCE 8 #default is 3 for raster, 0 for vector
+        #TOLERANCEUNITS meters #default is meters, [pixels|feet|inches|kilometers|meters|miles|dd]
+        CLASS
+            STYLE
+                ANTIALIAS false
+                COLOR 239 228 190
+                OUTLINECOLOR 0 0 0
+            END #end style
+        END #end class
+    END #end layer
+
+    LAYER
+        NAME 'Lakes'
+        GROUP 'Lakes'
+        DATA 'Lakes'
+        PROJECTION
+            "init=epsg:4326"
+        END #end projection
+        TYPE polygon
+        STATUS ON
+        TOLERANCE 8 #default is 3 for raster, 0 for vector
+        CLASS
+            NAME "Lakes"
+            STYLE
+                ANTIALIAS false
+                COLOR 151 219 242
+                BACKGROUNDCOLOR 151 219 242 # not sure about this one
+                OUTLINECOLOR 0 0 0
+            END #end style
+        END #end class
+    END #end layer
+
+    LAYER
+        NAME 'Rivers'
+        GROUP 'Rivers'
+        DATA 'Rivers'
+        PROJECTION
+            "init=epsg:4326"
+        END #end projection
+        TYPE line
+        STATUS ON
+        TOLERANCE 8 #default is 3 for raster, 0 for vector
+        CLASS
+            NAME "Rivers"
+            STYLE
+                COLOR 10 147 252
+                MINSIZE 1
+                MAXSIZE 1
+            END #end style
+        END #end class
+    END #end layer
+    
+    LAYER
+        NAME "BlueSkySmoke"
+        DATA "BlueSkyGateway_PM25_%date%%hour%00.img"
+        TYPE raster
+        STATUS ON
+        PROJECTION
+            "proj=lcc"
+            "lat_1=33.0"
+            "lat_2=45.0"
+            "lat_0=40.0"
+            "lon_0=-97.0"
+            "x_0=0"
+            "y_0=0"
+            "ellips=GRS80"
+            "datum=NAD83"
+            "units=m"
+        END
+        CLASS
+            EXPRESSION ([pixel] <= 2.0)
+            STYLE
+#                COLOR 255 255 255
+            END
+        END #end class
+        CLASS
+            EXPRESSION ([pixel] <= 10.0)
+            STYLE
+                COLOR 0 150 0
+            END
+        END #end class
+        CLASS
+            EXPRESSION ([pixel] <= 25.0)
+            STYLE
+                COLOR 0 200 0
+            END
+        END #end class
+        CLASS
+            EXPRESSION ([pixel] <= 40.0)
+            STYLE
+                COLOR 0 255 0
+            END
+        END #end class
+        CLASS
+            EXPRESSION ([pixel] <= 60.0)
+            STYLE
+                COLOR 252 252 0
+            END
+        END #end class
+        CLASS
+            EXPRESSION ([pixel] <= 80.0)
+            STYLE
+                COLOR 255 255 150
+            END
+        END #end class
+        CLASS
+            EXPRESSION ([pixel] <= 175.0)
+            STYLE
+                COLOR 255 126 0
+            END
+        END #end class
+        CLASS
+            EXPRESSION ([pixel] <= 300.0)
+            STYLE
+                COLOR 255 0 0
+            END
+        END #end class
+        CLASS
+            EXPRESSION ([pixel] <= 500.0)
+            STYLE
+                COLOR 153 0 76
+            END
+        END #end class
+        CLASS
+            EXPRESSION ([pixel] > 500.0)
+            STYLE
+                COLOR 76 0 38
+            END
+        END #end class
+        OPACITY 50
+    END #end layer
+
+    LEGEND
+        STATUS ON
+        IMAGECOLOR 238 238 238
+#       POSITION LL
+        KEYSIZE 18 12 
+        KEYSPACING 5 5 
+        LABEL
+            TYPE truetype
+            FONT sans
+            SIZE 8
+            COLOR 0 0 89
+        END  # end Label
+    END # end Legend
+    
+    SCALEBAR
+        STATUS on
+        POSITION lc
+        STYLE 0
+        INTERVALS 3
+        SIZE 129 3
+        IMAGECOLOR  255 255 255
+        LABEL
+            COLOR 0 0 0
+            SIZE 1
+        END  # end label
+        OUTLINECOLOR 0 0 0
+        COLOR  0 0 0
+        BACKGROUNDCOLOR  255 255 255
+        UNITS kilometers
+    END   # end scalebar
+        
+    OUTPUTFORMAT
+        NAME "png"
+        MIMETYPE "image/png"
+        DRIVER "AGG/PNG"
+        EXTENSION "png"
+        #IMAGEMODE PC256
+        IMAGEMODE RGBA
+        TRANSPARENT true
+    END #end outputformat
+    
+END #end map
+

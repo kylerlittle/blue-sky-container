@@ -1,0 +1,15 @@
+ENVI
+description = {
+  File Imported into ENVI.}
+samples = 4350
+lines   = 2718
+bands   = 1
+header offset = 0
+file type = ENVI Standard
+data type = 4
+interleave = bsq
+sensor type = Unknown
+byte order = 0
+map info = {LFMC Lambert, 1.5000, 1.5000, -2227.0000, 1225.0000, 1.0000000000e+000, 1.0000000000e+000, North America 1983, units=Km}
+projection info = {4, 6378137.0, 6356752.3, 40.000000, -96.000000, 0.0, 0.0, 20.000000, 60.000000, North America 1983, LFMC Lambert, units=Km}
+wavelength units = Unknown

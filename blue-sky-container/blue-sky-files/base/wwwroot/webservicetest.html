@@ -1,0 +1,239 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>BlueSky Framework webservice test</title>
+<script type="text/javascript" src="xmlrpc_lib.js"></script>
+<script type="text/javascript">
+   
+    function getRequest(methodName, latitude, longitude) {
+        return '<' + '?xml version="1.0"?>\n' +
+            '<methodCall>\n' +
+            '<methodName>' + methodName + '</methodName>\n' +
+            '<params>\n' +
+            '<param>\n' +
+            '<struct>\n' +
+            '  <member>\n' +
+            '    <name>latitude</name>\n' +
+            '    <value><double>' + latitude.toString() + '</double></value>\n' +
+            '  </member>\n' +
+            '  <member>\n' +
+            '    <name>longitude</name>\n' +
+            '    <value><double>' + longitude.toString() + '</double></value>\n' +
+            '  </member>\n' +
+            '</struct>\n' +
+            '</param>\n' +
+            '</params>\n' +
+            '</methodCall>\n';
+    }
+    
+    function escapeHTML(s) {
+        return s
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+    }
+    
+    function displayRequest(requestXML) {
+        var div = document.getElementById("request");
+        div.innerHTML = "<h3>Request</h3><pre>" + escapeHTML(requestXML) + "</pre>";
+        div.style.visibility = "visible";
+    }
+    
+    function displayResponse(responseXML) {
+        var div = document.getElementById("response");
+        div.innerHTML = "<h3>Response</h3><pre>" + escapeHTML(responseXML) + "</pre>";
+        div.style.visibility = "visible";
+    }
+    
+    function parseResponse(xml) {
+        // OK, here we have the result of the XML-RPC method call, encoded as XML.
+        // Rather than spending a lot of time messing around with XML parsing,
+        // we're going to use the open-source xmlrpc_lib.js library to parse it
+        // for us.  (In fact, the library would have made the rest of the process
+        // easier too, but we did it the hard way so we could see the actual XML
+        // being sent back and forth.)
+        
+        // There's no reason why this particular library is needed; there are plenty
+        // of XML-RPC libraries out there, some of which may be nicer than this one.
+        // I'm using this particular library because I was able to find it in less
+        // than 30 seconds using Google.
+        
+        var div = document.getElementById("result");        
+
+        // Parse the result with xmlrpc_lib.js
+        var msg = new xmlrpcmsg();
+        var data = msg.parseResponse(xml, true, 'jsvars');
+
+        // xmlrpc_lib.js likes to use lots of ".me" members (!)
+        var fire_locations = data.val.me.fires.me.fire_locations.me;
+        
+        div.innerHTML = 
+            "<h3>Result</h3>" +
+            "<b>Number of fires returned:</b> " + fire_locations.length + "<br/><br/>";
+        
+        // Loop through the returned fires (normally there will only be one,
+        // since we only provided input data for one)
+        for(var i = 0; i < fire_locations.length; i++) {
+            var fireLoc = fire_locations[i].me;
+            
+            // Output some basic information on each fire
+            div.innerHTML += 
+                "<b>Fire #" + (i + 1) + ":</b> " + fireLoc.id.me + "<br/>" +
+                "<b>Latitude:</b> " + fireLoc["latitude"].me + "<br/>" +
+                "<b>Longitude:</b> " + fireLoc["longitude"].me + "<br/>";
+            
+            var fuels = fireLoc.fuels.me;
+            if(fuels) {                
+                // Output FuelsData information
+                div.innerHTML +=
+                    "<blockquote>" +
+                    "<b>Vegetation type:</b> " + fuels["metadata"].me["VEG"].me + "<br/>" +
+                    "<b>1-hr fuels:</b> " + fuels["fuel_1hr"].me + "<br/>" +
+                    "<b>10-hr fuels:</b> " + fuels["fuel_10hr"].me + "<br/>" +
+                    "<b>100-hr fuels:</b> " + fuels["fuel_100hr"].me + "<br/>" +
+                    "<b>1,000-hr fuels:</b> " + fuels["fuel_1khr"].me + "<br/>" +
+                    "<b>10,000-hr fuels:</b> " + fuels["fuel_10khr"].me + "<br/>" +
+                    "<b>&gt; 10,000-hr fuels:</b> " + fuels["fuel_gt10khr"].me + "<br/>" +
+                    "<b>Duff:</b> " + fuels["duff"].me + "<br/>" +
+                    "<b>Grass:</b> " + fuels["grass"].me + "<br/>" +
+                    "<b>Litter:</b> " + fuels["litter"].me + "<br/>" +
+                    "<b>Rotten fuels:</b> " + fuels["rot"].me + "<br/>" +
+                    "<b>Canopy:</b> " + fuels["canopy"].me + "<br/>" +
+                    "</blockquote>" +
+                    "<br/>";
+            } else {
+                div.innerHTML +=
+                    "<b>fuels member of FireLocation object is null</b>";
+            }
+        }
+    }
+    
+    function runModel() {
+        // Get the values of the form fields
+        var latitude = document.getElementById("latitude").value;
+        var longitude = document.getElementById("longitude").value;
+        var methodName = document.getElementById("model").value;
+        
+        // Construct the request XML and display it in the box using displayRequest()
+        var requestXML = getRequest(methodName, latitude, longitude);
+        displayRequest(requestXML);
+        
+        // Basic XMLHttpRequest stuff.  Send the request via HTTP POST to the server.
+        var url = "http://" + window.location.host + "/xml-rpc.py";
+        var req = new XMLHttpRequest();
+        req.open("POST", url, true);
+        req.onreadystatechange = function(e) {
+            if(req.readyState == 4) {
+                if(req.status == 200) {
+                    // OK, if we get here, then we have a valid response from the
+                    // server.  Display the raw text of the response with 
+                    // displayResponse(), and hand the text off to parseResponse()
+                    // to come up with a prettier result.
+                    displayResponse(req.responseText);
+                    parseResponse(req.responseText);
+                } else {
+                    alert("ERROR: HTTP error code " + req.status);
+                }
+            }
+        };
+        req.send(requestXML);
+    }
+    
+    window.onload = function() {
+        document.getElementById("mainForm").onsubmit = function() { return false; };
+        document.getElementById("btnSubmit").onclick = runModel;
+    };
+    
+</script>
+<style type="text/css">
+
+body {
+    color: black;
+    background: white;
+    font: 14px Arial, sans-serif;
+    width: 780px;
+}
+
+h1 {
+    font: bold 24px Verdana, sans-serif;
+    border-bottom: 1px solid black;
+    margin: 0 0 10px 0;
+    padding: 0;
+}
+
+h3 {
+    font: bold 16px Verdana, sans-serif;
+    border-bottom: 1px solid #999;
+    margin: 0 0 10px 0;
+    padding: 0;
+}
+
+form, #result, #request, #response {
+    border: 1px solid #999;
+    width: 355px;
+    float: left;
+    padding: 10px;
+    margin: 5px;
+}
+
+form, #result {
+    background: #def;
+}
+
+#request, #response {
+    background: #dfe;
+    visibility: hidden;
+}
+
+form, #request {
+    clear: left;
+}
+
+label {
+    width: 100px;
+    text-align: right;
+    clear: left;
+    float: left;
+    padding-right: 10px;
+    line-height: 24px;
+}
+
+input, select {
+    width: 235px;
+    float: left;
+}
+
+input.button {
+    width: auto;
+    float: right;
+    margin: 10px 10px 0 0;
+}
+
+</style>
+</head>
+<body>
+  <h1>BlueSky Framework webservice test</h1>
+  <form id="mainForm">
+    <h3>Run fuel loading model</h3>
+    <label for="latitude">Latitude:</label>
+    <input name="latitude" id="latitude" value="45.46"/>
+
+    <label for="longitude">Longitude:</label>
+    <input name="longitude" id="longitude" value="-114.961"/>
+    
+    <label for="model">Model:</label>
+    <select id="model" name="model">
+        <option value="NoFuelLoading">NoFuelLoading</option>
+        <option value="FCCS" selected="selected">FCCS</option>
+        <option value="NFDRS">NFDRS</option>
+    </select>
+    
+    <input type="submit" class="button" id="btnSubmit" value="Submit"/>
+  </form>
+  <div id="result">
+    <h3>Result</h3>
+  </div>
+  <div id="request"></div>
+  <div id="response"></div>
+</body>
+</html>

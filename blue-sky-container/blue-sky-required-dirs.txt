@@ -1,1 +1,2 @@
 /opt/bluesky/bluesky_3.5.1/
+/other/dir/thing/

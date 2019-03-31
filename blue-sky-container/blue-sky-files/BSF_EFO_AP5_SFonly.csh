@@ -22,14 +22,19 @@ else
 endif
 
 #Check WF Season Variable
-source /home/airpact5/AIRHOME/run_ap5_day1/set_AIRPACT_fire_season.csh 
+# > TODO -- set_AIRPACT_... line below should be uncommented
+# this is a circular dependency lol... Maybe let's not do that.
+# source /home/airpact5/AIRHOME/run_ap5_day1/set_AIRPACT_fire_season.csh 
 
 # Define directories
 setenv BS_DIR /opt/bluesky/bluesky_3.5.1
 
 set TARGET_DIR  = /home/airpact5/AIRHOME/run_ap5_day1/emis/fire_orl/transfer
 set LOG_DIR = /home/airpact5/AIRHOME/run_ap5_day1/emis/fire_orl/transfer
-#mkdir -v -p $TARGET_DIR 
+# > TODO -- undo action: uncommented line below -- Kyler
+mkdir -v -p $TARGET_DIR 
+# > TODO -- undo action: added this line below -- Kyler
+mkdir -v -p $LOG_DIR
 
 set ORIGIN = $BS_DIR/output/${YYYYMMDD}00.1
 

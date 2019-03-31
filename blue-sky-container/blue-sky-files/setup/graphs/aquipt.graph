@@ -1,0 +1,100 @@
+#******************************************************************************
+#
+#  BlueSky Framework - Controls the estimation of emissions, incorporation of 
+#                      meteorology, and the use of dispersion models to 
+#                      forecast smoke impacts from fires.
+#  Copyright (C) 2003-2006  USDA Forest Service - Pacific Northwest Wildland 
+#                           Fire Sciences Laboratory
+#  BlueSky Framework - Version 3.5.1    
+#  Copyright (C) 2007-2009  USDA Forest Service - Pacific Northwest Wildland Fire 
+#                      Sciences Laboratory and Sonoma Technology, Inc.
+#                      All rights reserved.
+#
+# See LICENSE.TXT for the Software License Agreement governing the use of the
+# BlueSky Framework - Version 3.5.1.
+#
+# Contributors to the BlueSky Framework are identified in ACKNOWLEDGEMENTS.TXT
+#
+#******************************************************************************
+
+#
+# Default start and stop points (can be overridden by config)
+#
+[META]
+start=$EXTRACT_LOCAL_MET
+targets=$DISPERSION $TRAJECTORY
+
+# Input data gets connected here
+[Process($EXTRACT_LOCAL_MET)]
+
+[Process(FillDefaultData)]
+input(fires) = connect($EXTRACT_LOCAL_MET.fires)
+
+[Process($FUEL_MOISTURE)]
+input(fires) = connect(FillDefaultData.fires)
+
+# Growth split starts here
+[Process(FireTypeSplitter, GrowthSplit)]
+input(fires) = connect($FUEL_MOISTURE.fires)
+
+[Process($WILDFIRE_GROWTH, WildfireGrowth)]
+input(fires) = connect(GrowthSplit.wildfires)
+
+[Process($PRESCRIBED_GROWTH, PrescribedFireGrowth)]
+input(fires) = connect(GrowthSplit.prescribed_fires)
+
+[Process($OTHER_GROWTH, OtherFireGrowth)]
+input(fires) = connect(GrowthSplit.other_fires)
+
+[Process(ConsolidateFires, ConsolidateGrowth)]
+input(precedence) = 1
+input(fires) = connect(WildfireGrowth.fires), connect(PrescribedFireGrowth.fires), connect(OtherFireGrowth.fires)
+# Growth split ends here
+
+[Process($FUEL_LOAD)]
+input(fires) = connect(ConsolidateGrowth.fires)
+
+# Consumption split starts here
+[Process(FireTypeSplitter, ConsumptionSplit)]
+input(fires) = connect($FUEL_LOAD.fires)
+
+[Process($WILDFIRE_CONSUMPTION, WildfireConsumption)]
+input(fires) = connect(ConsumptionSplit.wildfires)
+config(CANOPY_FRACTION) = $WILDFIRE_CANOPY_FRACTION
+
+[Process($PRESCRIBED_CONSUMPTION, PrescribedFireConsumption)]
+input(fires) = connect(ConsumptionSplit.prescribed_fires)
+config(CANOPY_FRACTION) = $PRESCRIBED_CANOPY_FRACTION
+
+[Process($OTHER_CONSUMPTION, OtherFireConsumption)]
+input(fires) = connect(ConsumptionSplit.other_fires)
+config(CANOPY_FRACTION) = $OTHER_CANOPY_FRACTION
+
+[Process(ConsolidateFires, ConsolidateConsumption)]
+input(precedence) = 1
+input(fires) = connect(WildfireConsumption.fires), connect(PrescribedFireConsumption.fires), connect(OtherFireConsumption.fires)
+# Consumption split ends here
+
+[Process($TIME_PROFILE)]
+input(fires) = connect(ConsolidateConsumption.fires)
+
+[Process($EMISSIONS)]
+input(fires) = connect($TIME_PROFILE.fires)
+
+[Process($PLUME_RISE)]
+input(fires) = connect($EMISSIONS.fires)
+
+[Process($DISPERSION_MET)]
+input(met_info) = connect($EXTRACT_LOCAL_MET.met_info)
+
+[Process($DISPERSION)]
+input(aquipt_info) = connect($EXTRACT_LOCAL_MET.aquipt_info)
+input(met_info) = connect($DISPERSION_MET.met_info)
+input(fires) = connect($PLUME_RISE.fires)
+
+[Process($TRAJECTORY_MET)]
+input(met_info) = connect($EXTRACT_LOCAL_MET.met_info)
+
+[Process($TRAJECTORY)]
+input(met_info) = connect($TRAJECTORY_MET.met_info)
+input(fires) = connect($PLUME_RISE.fires)

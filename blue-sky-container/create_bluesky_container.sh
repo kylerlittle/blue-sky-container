@@ -9,10 +9,12 @@ ssh "${BSUSER}@${AEOLUSHPCC}" 'bash -s' << 'ENDSSH'
     scp "${bluenode}:/opt/bluesky/bluesky_3.5.1/BSF_EFO_AP5_SFonly.csh" .
 ENDSSH
 
-# TODO > Run mkdir -p for every line in 'blue-sky-required-dirs'
-mkdir -p /opt/bluesky/bluesky_3.5.1/
+# Run mkdir -p for every line in 'blue-sky-required-dirs'
+DIR_TO_MK=$(grep -vE "^\s*#" blue-sky-required-dirs.txt | tr "\n" " ")
+mkdir -p "${DIR_TO-MK}"
 
 # TODO > Run scp for each file in 'blue-sky-required-files'
+FILES_TO_CP=$(grep -vE "^\s*#" blue-sky-required-files.txt | tr "\n" " ")
 scp "${BSUSER}@${AEOLUSHPCC}:/home/${BSUSER}/BSF_EFO_AP5_SFonly.csh" /opt/bluesky/bluesky_3.5.1/
 
 

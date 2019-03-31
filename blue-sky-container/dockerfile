@@ -11,8 +11,15 @@ RUN apt-get update && apt-get install $(grep -vE "^\s*#" package_notes.txt  | tr
 # Ensure ssh toolkit is installed
 RUN apt-get -y install openssh-client
 
+# Get C shell scripting
+RUN apt-get -y install csh
+
 # Add script which will get all data necessary for the BlueSky Job
 ADD create_bluesky_container.sh /
 
-# Run the script.
-CMD bash create_bluesky_container.sh
+ENV BS_DIR /opt/bluesky/bluesky_3.5.1/
+WORKDIR ${BS_DIR}
+COPY ./blue-sky-files .
+
+# Run bash.
+CMD ["/bin/bash"]

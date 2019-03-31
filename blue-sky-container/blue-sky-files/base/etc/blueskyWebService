@@ -1,0 +1,90 @@
+#! /bin/bash
+#
+# description: start and stop bluesky web service
+# author: Ken Craig, Sonoma Technology, 5/2011
+#
+
+prog="BlueSky Web Server"
+BLUESKYWEB=/opt/bluesky/base/lib/bluesky
+pidfile=/opt/bluesky/working/bluesky-server.pid
+
+if [ ! -x $BLUESKYWEB ]; then
+   echo $"$BLUESKYWEB does not exist "
+   exit 1
+fi
+
+function start()
+{
+    if [ -e $pidfile ]; then
+       pid=`cat $pidfile`
+       if [ -d "/proc/$pid" ]; then
+          echo $"$prog already running as process $pid"
+          exit 0
+       else
+          rm $pidfile  # pid file leftover from a previous failure
+       fi
+    fi
+    $BLUESKYWEB -Wstart
+}
+
+function stop()
+{
+    if [ ! -e $pidfile ]; then
+       echo $"$prog not running"
+    else
+       pid=`cat $pidfile`
+       if [ -d "/proc/$pid" ]; then
+          $BLUESKYWEB -Wstop
+       else
+          echo $"$prog not running"
+       fi
+    fi
+}
+
+function restart()
+{
+    stop
+    start
+}
+
+function condrestart()
+{
+    restart
+}
+
+function status()
+{
+    if [ ! -e $pidfile ]; then
+       echo $"$prog not running"
+    else
+       pid=`cat $pidfile`
+       if [ -d "/proc/$pid" ]; then
+          echo $"$prog is running as process $pid"
+       else
+          echo $"$prog not running"
+       fi
+    fi
+}
+
+case "$1" in 
+    start)
+       start
+       ;;
+    stop)
+       stop
+       ;;
+    restart)
+       restart
+       ;;
+    condrestart)
+       condrestart
+       ;;
+    status)
+       status
+       ;;
+    *)
+       echo $"Usage: $0 {start|stop|restart|status|condrestart}"
+       exit 1
+esac
+
+exit 0
