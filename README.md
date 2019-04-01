@@ -1,5 +1,5 @@
 # blue-sky-container
-TODOs:
+## TODOs
 - **\[Deadline: 3/4/2019]** Create base ubuntu 16.04 docker image hello world in python integrated into image run image locally on our machines publish to a service of sorts :heavy_check_mark:
   - Garrett: Set up, python
   - Slater: fortran
@@ -16,3 +16,19 @@ TODOs:
   - Kyler
 - **\[Deadline: 4/8/2019]** Run BlueSky job inside Docker container locally. Deploy to Aeolus using Singularity.
   - Garrett, Slater, Kyler, \& Jeff
+
+## Local Usage
+Firstly, you will need to be a member of the [DockerHub repository](https://hub.docker.com/r/kylerlittle/broken-tooth).
+
+To run,
+```
+cd blue-sky-container
+./run_docker.sh
+```
+
+To rebuild the container if you've changed stuff, simply run:
+```
+cd blue-sky-container
+./rebuild_docker.sh
+```
+This will rebuild the image and re-push to DockerHub.
