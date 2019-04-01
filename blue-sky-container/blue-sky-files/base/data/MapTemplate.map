@@ -265,7 +265,7 @@ MAP
     OUTPUTFORMAT
         NAME "png"
         MIMETYPE "image/png"
-        DRIVER "AGG/PNG"
+        DRIVER "GD/PNG"
         EXTENSION "png"
         #IMAGEMODE PC256
         IMAGEMODE RGBA

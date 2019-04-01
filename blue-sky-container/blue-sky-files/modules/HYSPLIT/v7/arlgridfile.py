@@ -1,12 +1,12 @@
 #*****************************************************************************
 #
-#  BlueSky Framework - Controls the estimation of emissions, incorporation of
-#                      meteorology, and the use of dispersion models to
+#  BlueSky Framework - Controls the estimation of emissions, incorporation of 
+#                      meteorology, and the use of dispersion models to 
 #                      forecast smoke impacts from fires.
-#  Copyright (C) 2003-2006  USDA Forest Service - Pacific Northwest Wildland
+#  Copyright (C) 2003-2006  USDA Forest Service - Pacific Northwest Wildland 
 #                           Fire Sciences Laboratory
-#  BlueSky Framework - Version 3.5.1
-#  Copyright (C) 2007-2009  USDA Forest Service - Pacific Northwest Wildland Fire
+#  BlueSky Framework - Version 3.5.1    
+#  Copyright (C) 2007-2009  USDA Forest Service - Pacific Northwest Wildland Fire 
 #                      Sciences Laboratory and Sonoma Technology, Inc.
 #                      All rights reserved.
 #
@@ -27,18 +27,18 @@ from kernel.grid import GridFile, InvGeoTransform
 import arldata
 
 class ARLGridFile(GridFile):
-
+    
     def __init__(self, filename):
         try:
             self.ds = arldata.ARLFile( filename, fast=True )
         except:
-            raise Exception("Unable to decode ARL file %s" % filename)
-
+            raise Exception("Unable to decode ARL file %s" % f)
+            
         self.metadata = dict()
         self.metadata["filename"] = self.ds.file
         self.metadata["start_dt"] = self.ds.start
         self.metadata["end_dt"] = self.ds.end
-        self.metadata["data_source"] = self.ds.mainHeader.data_source
+        self.metadata["data_source"] = self.ds.mainHeader.data_source    
         self.metadata["tangent_long"] = self.ds.mainHeader.tangent_long     # Projection central longitude
         self.metadata["tangent_lat"] = self.ds.mainHeader.tangent_lat       # Projection central latitude
         self.metadata["cone_angle"] = self.ds.mainHeader.cone_angle         # Standard latitude
@@ -72,7 +72,7 @@ class ARLGridFile(GridFile):
                     "+x_0=0 +y_0=0 "
                     "+ellips=sphere +a=6371200 +b=6371200 "
                     "+towgs84=0,0,0,0,0,0,0 "
-                    "+units=m" % self.metadata)
+                    "+units=m" % self.metadata) 
 
         elif cone_angle == 90.0 or cone_angle == -90.0:
             self.metadata["projection"] = 'Polar Stereographic'
@@ -95,20 +95,20 @@ class ARLGridFile(GridFile):
                     "+ellips=sphere +a=6371200 +b=6371200 "
                     "+towgs84=0,0,0,0,0,0,0 "
                     "+units=m" % self.metadata)
-
+            
         self.spatialref = osr.SpatialReference()
         self.spatialref.ImportFromProj4(proj)
-
+        
         self.varname = None
         self.__currentband = None
         self.__currentgrid = None
-
+        
         # Set up coordinate transforms
         latlon = osr.SpatialReference()
         latlon.SetWellKnownGeogCS("WGS84")
         self.LL2XY = osr.CoordinateTransformation(latlon, self.spatialref)
         self.XY2LL = osr.CoordinateTransformation(self.spatialref, latlon)
-
+        
         # Use tie point to compute the projection coordinate of the SW corner of the grid
         synch_long = self.metadata["synch_pnt_long"]
         synch_lat = self.metadata["synch_pnt_lat"]
@@ -119,25 +119,26 @@ class ARLGridFile(GridFile):
         yorig -= grid_spacing/2.0
         self.metadata["xorig"] = xorig
         self.metadata["yorig"] = yorig
-
+        
         # Set the geotransform for the coordinate system
         self.geotransform = (xorig, grid_spacing, 0.0, yorig, 0.0, grid_spacing)
         self.invtransform = InvGeoTransform(self.geotransform)
         self.minX, self.cellSizeX, self.skewX = self.geotransform[:3]
         self.minY, self.skewY, self.cellSizeY = self.geotransform[3:]
-        self.sizeX = self.metadata["num_x_pnts"]
+        self.sizeX = self.metadata["num_x_pnts"] 
         self.sizeY = self.metadata["num_y_pnts"]
-
+            
     def getBand(self):
         raise NotImplementedError
-
+    
     def getValueAt(self):
         raise NotImplementedError
-
+    
     def __getitem__(self):
         raise NotImplementedError
-
+        
     def __len__(self):
         """Return the number of time periods in the ARL data file"""
         delta = self.ds.end - self.ds.start
         return (((delta.days * 86400) + delta.seconds) / 3600) / (self.ds.interval.seconds / 3600)
+        

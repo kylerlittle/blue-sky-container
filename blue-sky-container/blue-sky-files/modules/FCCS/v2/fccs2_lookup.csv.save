@@ -1,0 +1,253 @@
+mapID,VEG,1HR,10HR,100HR,1kHR,10kHR,10k+HR,DUFF,GRASS,SHRUB,CANOPY,LITTER,ROT
+0,Urban,0.5,0.25,0.25,0,0,0,0,0,2.2,0,1,1
+1,Black cottonwood - Douglas-fir - Quaking aspen,0.2,0.8,3.50,0.5,0.5,0,2,0.18,1.15,28.68,0.02,12.00
+2,Western hemlock - Western redcedar - Douglas-fir forest,1,2,4,2,3.00,6.00,3,0.13,3.29,20.96,0.03,8.00
+4,Douglas-fir / Ceanothus forest,0.2,0.3,3.80,0,0,0,1.5,0.54,2.96,3.75,0.06,23.50
+5,Douglas-fir - White fir forest,0.5,1.6,3.30,4.3,8.90,3.4,1.1,0.11,3.26,20.94,0.11,3
+6,Oregon white oak - Douglas-fir forest,0.1,0.4,0.8,2.60,2.2,0,0.3,0.51,1.10,12.23,0.19,1.70
+7,Douglas-fir - Sugar pine - Tanoak forest,1,3.2,1.90,0.6,0.70,1.7,1.3,0.02,0.45,19.30,0.00,24.50
+8,Western hemlock - Douglas-fir - Western redcedar / Vine maple forest,1,2,4,10,20,10,5,0.02,0.73,16.89,0.01,17
+9,Douglas-fir - Western Hemlock - Western redcedar / Vine maple forest,1.50,2.60,2.5,2,3.70,7.00,1.5,0.14,2.23,10.60,0.02,32.70
+10,Western hemlock - Douglas-fir - Sitka spruce forest,1.30,1,1,5,35,5,5,0.22,0.72,25.78,0.13,17
+11,Douglas-fir / Western hemlock - Sitka spruce forest,1,2,4,5,5,5,1.25,0.19,0.49,12.35,0.06,15
+12,Mountain hemlock - Red fir - Lodgepole pine - White pine forest,0.3,0.6,1.1,0.6,4.5,7.00,1.4,0.04,0.01,16.21,0.02,9.10
+14,Black oak woodland,0.25,0.5,0.90,1.25,0,0,0.5,0.08,0.10,19.63,0.02,0
+15,Jeffrey pine - Red fir - White fir / Greenleaf manzanita - Snowbrush forest,0.08,0.70,0.23,1.75,5,6.00,4.5,0.03,3.38,14.38,0.02,4.5
+16,Jeffrey pine - Ponderosa pine - Douglas-fir - Black oak forest,0.3,1.40,1.80,0.8,2.5,0,1,0.14,2.43,8.33,0.06,3.20
+17,Red fir forest,0.90,3.10,3.00,1,1,1,4.6,0.04,0,24.97,0.02,1.8
+18,Douglas-fir / Oceanspray forest,0.4,0.8,0.2,1.1,2.7,6.3,0.8,0.11,0.15,7.51,0.06,1.70
+19,White fir - Giant sequoia - Sugar pine forest,0.5,1.50,3.00,0.5,4,19,2.1,0.01,0.05,18.39,0.00,11.20
+20,Western juniper / Huckleberry oak forest,0.05,0.1,0.5,1,0,0,1,0.28,0.53,3.64,0.07,6
+21,Lodgepole pine early seral forest,0.2,1,2.5,8,0.5,0,1,0.01,0.00,0.63,0.01,0.90
+22,Lodgepole pine forest,0.4,2.2,2.80,8.3,0.70,0.5,2,0.14,0.00,4.13,0.06,1.8
+24,Pacific ponderosa pine - Douglas-fir forest,0.1,0.2,0.75,2,0.8,0,0.6,0.38,0,5.72,0.13,2.50
+25,Pinyon - Juniper forest,0.3,0.5,1.2,1,1,0,1.1,0.03,0.23,9.69,0.02,0
+27,Ponderosa pine - Two-needle pine - Juniper forest,0.2,0.3,1,2,0,0,0.3,0.45,1.67,3.50,0.05,9.00
+28,Ponderosa pine savanna,0.05,0.1,0.2,0.3,0.5,0,0.4,0.72,1.58,1.83,0.08,3.5
+30,Turbinella oak - Ceanothus - Mountain mahogany shrubland,0.1,0.3,0,0,0,0,0.2,0.08,2.03,0,0.02,0
+32,Ponderosa pine / Pinyon pine - Juniper forest,0.1,0.90,1.30,1.40,0,0,0.6,0,0.01,8.17,0,6.8
+34,Interior Douglas-fir - Ponderosa pine / Gambel oak forest,0.1,1.50,4,2,3.00,5,1,0.14,0.88,4.34,0.06,3.50
+36,Live oak - Blue oak woodland,0.5,0.5,1,1,1,0.2,1,0.2,1.58,1.21,0.2,0.6
+37,Ponderosa pine - Jeffrey pine forest,0.1,1,1.50,1.2,2.5,0,2,0.16,3.02,8.62,0.15,3.1
+38,Douglas-fir - Madrone / Tanoak forest,1,2,2,3.00,3.00,7,0.8,0.16,0.63,18.80,0.04,0
+39,Sugar pine - Douglas-fir - Ponderosa pine - Oak forest,0.4,2.10,1.1,2.60,1.50,0,0.8,0.05,0.13,19.70,0.05,1.10
+40,Tobosa - Grama grassland,0,0,0,0,0,0,0,0.06,0.65,0,0.024,0
+41,Idaho fescue - Bluebunch wheatgrass grassland,0,0,0,0,0,0,0,0.56,0,0,0.10,0
+42,Trembling aspen / Engelmann spruce forest,0.3,0.70,1.80,9,0.6,0,1.3,0.36,0.01,7.29,0.04,5
+43,Arizona white oak - Silverleaf oak - Emory oak woodland,0.1,0.4,0.8,1,0,0,0.4,0.43,0.36,3.61,0.07,0
+44,Scrub oak - Chaparral shrubland,0.5,0.25,0.25,0,0,0,0.1,0,4.52,0,0,0
+45,Pine - Oak forest,0.4,1,1,4,1,0,1,0.08,0.83,2.83,0.02,3.50
+46,Chamise chaparral shrubland,0.5,1,1,0,0,0,0.4,0,5.25,0,0,0
+47,Redwood - Tanoak forest,0.4,2,3.00,8,12.00,8,4.5,0.35,2.92,15.07,0.15,20.00
+48,Tanoak - California bay - Madrone forest,0.5,1,2,2,1.50,1.50,1.5,0.08,2.87,21.66,0.02,8
+49,Creosote bush shrubland,0.1,0.2,0,0,0,0,0,0.07,0.42,0,0.03,0
+51,Coastal sage shrubland,0.1,0.1,0,0,0,0,0,0,3.48,0,0,0
+52,Douglas-fir - ponderosa pine forest,0.4,0.90,0.4,0.4,1.1,0.6,1.1,0.15,0.22,13.52,0.06,2.8
+53,Pacific ponderosa pine forest,0.1,1.50,1.50,8,3.00,0,1.5,0.03,0,9.51,0.03,4.50
+54,Douglas-fir - White fir - Interior ponderosa pine forest,0.3,2.4,4.9,0.5,3.00,4,2,0.08,0.10,25.75,0.03,8.00
+55,Western juniper / Sagebrush savanna,0.2,0.4,0.8,0,0,0,0.2,0.31,0.45,4.48,0.31,0
+56,Sagebrush shrubland,0,0,0,0,0,0,0,0.36,1.57,0,0.36,0
+57,Wheatgrass - Cheatgrass grassland,0,0,0,0,0,0,0,0.07,0,0,0.04,0
+59,Subalpine fir - Engelmann spruce - Douglas-fir - Lodgepole pine forest,0.5,1,2,6.3,3.9,0.3,3.2,0.26,1.00,5.85,0.04,10.5
+60,Sagebrush Shrubland - Sparse,0,0,0,0,0,0,0,0.11,0.34,0,0.09,0
+61,Whitebark pine / Subalpine fir forest,0.1,0.4,1.7,4.4,13.6,0,1.3,0.12,0.43,11.45,0.08,24.9
+63,Showy sedge - Alpine black sedge grassland,0,0,0,0,0,0,0,1.28,0,0,0.07,0
+65,Red fescue - Oatgrass grassland,0,0,0,0,0,0,0.2,1.62,0,0,0.18,0
+66,Bluebunch wheatgrass - Bluegrass grassland,0,0,0,0,0,0,1.7,0.86,0.03,0,0.15,0
+67,Interior ponderosa pine - Douglas-fir forest,0.5,1.40,1.2,4,2,0,2,0.56,1.60,5.76,0.19,2.6
+69,Western Juniper / Sagebrush - Bitterbrush shrubland,0.2,0.4,0.2,0,0,0,0.1,0.18,1.31,0.03,0.02,0
+70,Subalpine fir - Lodgepole pine - Whitebark pine - Engelmann spruce forest,0.3,1.2,2.5,12.00,7.00,0,1.2,0.14,1.11,9.55,0.06,14.20
+85,Black spruce / lichen forest,0.2,0.3,1,1.50,0,0,6,0.06,0.86,1.15,0.01,1
+87,Black spruce / feathermoss forest,0.1,0.2,0.5,1,0,0,6,0.03,0.54,7.26,0.00,0.5
+88,Black spruce / sphagnum moss forest,0.2,0.3,1,1,0,0,35,0.03,0.32,0.56,0.01,1
+89,Black spruce / cottonsedge woodland,0.2,0.3,1,1,0,0,20,0.82,0.22,0.56,0.20,1
+90,White oak - Northern red oak forest,1,1.40,1.50,5,4,0,2,0.01,0.38,14.44,0.00,1
+93,Paper birch - quaking aspen forest,0.3,0.4,0.8,3.00,3.00,0,4,0.02,0.36,12.28,0.00,2
+94,Balsam poplar - quaking aspen forest,0.2,0.3,1.50,2,1,0,3,0.02,0.54,11.47,0.01,1.5
+95,Willow --  mountain alder shrubland,0.2,0.5,0.5,0.5,0,0,2,0.08,2.56,0,0.02,0.4
+97,Cottongrass grassland,0,0,0,0,0,0,10,2.4,0.12,0,0.60,0
+98,Marsh Labrador tea - lingonberry tundra shrubland,0,0,0,0,0,0,2,0.18,1.26,0,0.02,0
+99,Bluejoint reedgrass grassland,0,0,0,0,0,0,2,4.5,0,0,0.50,0
+100,Altai fescue grassland,0,0,0,0,0,0,1,3.60,0,0,0.40,0
+101,White spruce forest,0.3,0.5,1.50,2,0,0,5,0.02,0.70,9.69,0.01,0.5
+103,White spruce - paper birch forest,0.5,0.70,1.50,3.00,2,0,3,0.02,0.97,12.57,0.01,2
+105,Paper birch - quaking aspen - white spruce forest,0.4,0.5,1.50,5,3.00,0,3,0.05,0.96,16.44,0.01,4
+107,Pitch pine / Scrub oak forest,0.1,0.70,0.5,0.1,0,0,3,0.02,0.60,2.64,0.00,0.2
+109,Eastern white pine - Northern red oak - Red maple forest,0.3,0.5,1,1.2,0.5,0.5,1,0.32,1.55,21.51,0.08,1.05
+110,American beech - Yellow birch - Sugar maple forest,0.4,0.5,1,1,5,0,1,0.10,0.15,19.14,0.01,1.5
+114,Virginia pine - Pitch pine -  Shortleaf pine forest,0.2,0.70,0.4,0.3,0.5,0,2,0.16,0.35,4.68,0.04,0.5
+115,Rhododendron - Blueberry - Mountain laurel shrubland,0.2,0.70,2,0,0,0,2.5,0.05,7.61,0.21,0.01,0.2
+123,White oak - Northern red oak - Black oak - Hickory forest,0.6,1.2,1.6,1.50,1.80,0,2,0.04,1.31,19.35,0.02,0.8
+125,Oak - Hickory - Pine - Eastern hemlock forest,0.02,0.4,0.70,1.80,1.80,0,0.7,0.04,1.32,17.21,0.01,0.5
+129,Green Ash - American Elm Forest,0.1,0.2,1.50,1.50,1.50,0,1,0.09,0.79,24.70,0.02,1
+131,Bluestem - Indian grass - Switchgrass grassland,0,0,0,0,0,0,0,2.39,0.13,0.64,0.92,0
+133,Tall fescue - Foxtail - Purple bluestem grassland,0.4,0.2,0,0,0,0,0,2.10,0.27,0.54,0.90,0
+135,Eastern redcedar - Oak / Bluestem savanna,0.2,0.4,0.8,0,0,0,0.2,1.25,0.20,1.90,0.25,0
+138,Red pine - White pine forest,0.90,1.50,1.90,4.8,5.20,0,1.8,0.08,0.32,12.73,0.03,3.50
+140,Jack pine / Black spruce forest,0.3,0.3,0.1,0.4,0,0,1.5,0.58,0.91,5.86,0.14,0.1
+142,Trembling aspen - Paper birch forest,0.5,1,3.00,3.00,0,0,2,0.10,0.23,17.25,0.01,1
+143,Trembling aspen - Paper birch - White spruce - Balsam fir forest,0.4,0.6,1.30,2,2,0,2,0.43,1.76,25.29,0.07,0.3
+147,Jack pine savanna,0.1,0.1,0.1,0.3,0,0,0.4,0.28,0.51,2.46,0.03,0
+154,Bur oak savanna,0.2,0.5,0.5,1,0.5,0,0.4,0.18,0.3,13.51,0.12,0
+155,Red spruce - Balsam fir forest,0.5,1,0.5,1.50,0.4,0,3,0.05,0.08,7.57,0.00,2.75
+157,Loblolly pine - Shortleaf pine - Mixed hardwoods forest,1,1.30,1.30,0.70,0.70,0.70,1,0.08,2.89,12.17,0.03,0.90
+161,Loblolly pine - Slash pine forest,1.2,0.84,0.25,0.5,0,0,1,0.09,2.00,3.17,0.02,1
+162,Loblolly pine - Slash pine forest with commercial thin,0.5,4.3,3.70,2.7,0,0,1,0.09,0.75,2.69,0.02,1.6
+164,Sand pine forest,1.50,1.50,0.3,1,0.5,0,1,0.01,1.15,3.34,0.00,0.1
+165,Longleaf pine / Three-awned grass - Pitcher plant grassland,0.1,0.16,0.14,0.2,0.1,0,0.5,0.28,1.18,0.43,0.07,0
+166,Longleaf pine / Three-awned grass - Pitcher plant savanna,0.2,0.5,0.3,0.5,0.2,0,1.6,0.17,6.39,5.10,0.04,0
+168,Little gallberry - Fetterbush shrubland,0,0,0,0,0,0,45.5,0.08,5.37,0.08,0.02,0
+170,Pond pine / Little gallberry - Fetterbush shrubland,0,0,0,0,0,0,10.5,0.08,5.99,0.85,0.02,0
+173,Live oak / Sea oats savanna,0.2,0.2,0.5,0,0,0,0,0.14,0.36,1.47,0.06,0
+174,Live oak - Sabal palm forest,0.5,0.5,0.5,1.50,1,0,0.75,0.14,3.75,10.38,0.06,0
+175,Smooth cordgrass - Black needlerush grassland,0,0,0,0,0,0,12.5,2.60,0,0,1.40,0
+176,Smooth Cordgrass - Black needlerush grassland with common reed invasion,0,0,0,0,0,0,19,2.60,0,0,1.40,0
+180,Red maple - Oak - Hickory - Sweetgum forest,0.4,0.70,1.40,1.80,1.80,0,2,0.19,0.60,12.15,0.06,1.20
+181,Pond pine forest,1,1.50,1.50,2,1,0.5,5,0,4.75,5.55,0,1
+182,Longleaf pine - Slash pine / Saw palmetto - Gallberry forest,0.1,0.4,0.3,0.5,0,0,4,0.12,7.87,2.52,0.08,0
+184,Longleaf pine / Turkey oak forest,0.1,0.5,1,0.8,0,0,1.25,0.12,2.10,16.25,0.08,0.2
+185,Longleaf pine / Turkey oak forest with prescribed fire,0.1,0.2,0.2,0.1,0,0,0.4,0.12,0.24,4.65,0.08,0
+186,Turkey oak - Bluejack oak forest,0.2,0.5,0.14,0.3,0.5,0,0.75,0.06,0.58,12.87,0.04,0.2
+187,Longleaf pine / Yaupon forest,0.8,4,6.20,1.2,1.50,0,1.25,0.12,0.98,4.33,0.08,0.2
+188,Sand pine - Oak forest,0.4,0.6,0.4,1.1,0,0,1,0,2.09,4.76,0,0
+189,Sand pine - Oak forest with insects and disease,0.6,0.70,0.8,4.10,2.10,0,1.6,0,2.23,9.44,0,0.4
+191,Longleaf pine - Slash pine / Gallberry forest,0.08,0.35,0.4,1,0,0,0.4,0.16,4.86,1.99,0.04,0
+196,Loblolly pine / Bluestem forest,0.3,0.56,0.15,0.5,0,0,0.2,0,1.77,0.32,0.1,1.5
+203,Sawgrass - Muhlenbergia grassland,0,0,0,0,0,0,0.5,2.10,0,0,0.90,0
+208,Grand fir - Douglas-fir forest,0.5,1.6,3.30,4.3,8.90,3.4,2,0.05,0.78,11.21,0.01,3
+210,Pinyon - Juniper forest,0.2,0.4,1,0.3,0,0,0.2,0.09,0.54,1.28,0.01,0.4
+211,Interior ponderosa pine forest,0.1,0.5,0.90,0.4,1.2,0,0.5,0.09,0.10,7.24,0.02,0.7
+216,Gambel oak - bigtooth maple forest,1,1.1,1.90,1.90,0,0,1.5,0.10,0.32,18.44,0.05,0
+217,Gambel oak - bigtooth maple forest with prescribed fire,0.1,0.2,1.40,1.6,0,0,0.7,0.09,0.27,12.20,0.02,0
+218,Gambel oak / Sagebrush shrubland,0.2,0.6,1,0.5,0,0,0.6,0.09,0.64,6.57,0.02,0
+219,Ponderosa pine - White fir / Trembling aspen forest,0.3,1.7,2.5,2.7,2.60,1.50,2,0.07,0.01,11.85,0.04,7.30
+221,Wheatgrass - Ryegrass grassland,0,0,0,0,0,0,0,0.20,0,0,0.06,0
+224,Trembling aspen forest,0.2,0.6,1.80,5.9,1.90,0,0.9,0.89,0.42,21.09,0.16,3.70
+226,White fir - Gambel oak forest,0.6,0.90,1.2,7.10,0,0,1.8,0.07,0.04,17.94,0.01,1.50
+227,White fir forest,0.3,0.4,1,6.70,0,0,1.4,0.05,0.04,15.45,0.01,7.40
+230,Pinyon - Juniper forest with prescribed fire,0.2,0.5,0.2,0.5,0.5,0,0.4,0.05,0.02,5.65,0.01,0
+231,Gambel oak - Juniper - Ponderosa pine forest,0.5,0.5,2,5,2,0,1.2,0.11,1.20,5.95,0.01,2
+232,Mesquite savanna,0,0,0,0,0,0,0,0.4,0.49,0.21,0.10,0
+235,Idaho fescue - Bluebunch wheatgrass grassland,0,0,0,0,0,0,0,1.81,0,0,0.21,0
+236,Tobosa - Grama grassland,0,0,0,0,0,0,0,0.04,0.11,0,0.01,0
+237,Vaccinium - Heather shrubland,0,0,0,0,0,0,0,0.06,2.19,0,0.00,0
+238,Pacific silver fir - Mountain hemlock forest,0.2,0.2,0.4,0.2,6.00,2.5,2,0.08,0.16,9.38,0.02,24.50
+240,Saw palmetto / Three-awned grass shrubland,0,0,0,0,0,0,2,0.17,3.85,0.08,0.03,0
+243,Pitch pine / Scrub oak forest,1.50,0.90,1.40,2.10,0.5,0,0.7,0.09,0.18,1.90,0.01,0
+264,Post oak - Blackjack oak forest,0.3,0.70,1,0,0,0,0.4,0.65,1.07,10.51,0.6,0
+265,Balsam fir - White spruce - Mixed hardwoods forest,0.5,0.6,1.6,1.1,2,4,2,0.75,0.65,9.10,0.25,2.2
+266,Sugar maple - Basswood forest,0.5,1,1,3.00,2,0.2,1,0.26,0.34,19.50,0.09,1.7
+267,American beech - Yellow birch - Sugar maple - Red spruce forest,0.5,1,1,1.50,5,0.2,1.5,0.08,0.17,16.14,0.03,1.7
+268,American beech - Yellow birch - Sugar maple - Eastern hemlock forest,0.5,1,1,1.50,5,0.2,1.5,0.08,0.12,17.43,0.03,1.7
+269,Sugar maple - Yellow poplar - American beech - Oak forest,1,1,2,3.00,2,0.5,2,0.43,0.34,36.07,0.07,2.80
+270,Red spruce - Fraser fir / Rhododendron forest,0.8,1.40,1.50,15.00,12.00,0,2,0.07,11.89,7.20,0.04,4
+272,Red mangrove - Black mangrove forest,0.25,1,4.20,0.2,0,0,40,0.2,1.09,2.06,0.05,3.00
+273,Engelmann spruce - Douglas-fir - White fir - Interior ponderosa pine forest,0.25,1.50,3.00,5,4.5,0,1.6,0.07,0.06,10.28,0.00,2.50
+274,American beech - Sugar maple forest,0.3,0.75,1,2,2,0.2,1,0.6,0.78,25.85,0.15,1.7
+275,Chestnut oak - White oak - Red oak forest,0.6,0.90,1.50,0.4,0,0,0.9,0.12,3.78,13.68,0.03,1
+276,Oak - Pine - Magnolia forest,0.5,0.5,1,3.00,1,0.5,0.75,0.09,0.69,19.54,0.02,0
+279,Black spruce - Northern white cedar - Larch forest,0.4,1,2,4,2,0,24,0.02,1.13,5.81,0.00,3
+280,Bluestem - Gulf cordgrass grassland,0,0,0,0,0,0,0,3.00,0.28,0,0.50,0
+281,Shortleaf pine - Post oak - Black oak forest,0.6,0.90,2.30,3.80,6.10,0,1,0.01,0.38,9.47,0.00,1.1
+282,Loblolly pine forest,0.6,1.7,2,3.00,2,0,2,0.02,1.85,8.96,0.00,0.2
+283,Willow oak - Laurel oak - Water oak forest,0.1,0.2,1.50,1.50,1.50,0,1,0.01,1.90,23.15,0.00,1
+284,Green ash - American elm - Silver maple - Cottonwood forest,0,0.2,1.50,1.50,1.50,0,1,0.09,0.62,21.31,0.02,1
+286,Ponderosa pine - limber pine forest,0.2,1,1,1,6.00,2,1.4,0.10,0.59,3.75,0.01,17
+287,Eastern white pine - Eastern hemlock forest,0.2,0.4,0.90,0.3,0,0,1,0.01,0.32,13.10,0.00,0.9
+288,Bald-cypress - Water tupelo forest,0.2,0.2,0.5,1,1,1,1,0.01,0.58,11.18,0.00,5
+289,Pond-cypress / Muhlenbergia - Sawgrass savanna,0.1,0.1,0.1,0,0,0,2,2.4,0,0.09,0.60,0
+291,Longleaf pine - Slash pine / Saw palmetto forest,0.02,0.4,0.3,0.5,0,0,1.5,0.12,6.70,2.52,0.08,0
+301,California Central Valley riparian woodland or shrubland,0.2,0.3,0.1,0,0,0,0.5,0.18,0.58,12.89,0.02,0.1
+302,Intermountain montane subalpine riparian grassland,0,0,0,0,0,0,0.5,0.28,0.72,0,0.02,0
+303,Warm desert riparian woodland or shrubland,0.2,0.3,0.1,0,0,0,0.5,0,0.59,7.93,0,0
+304,Conifer swamp forest,0.4,1,2,4,2,0,3,0.02,0.48,4.23,0.003,3
+305,Red alder forest,0.2,0.8,1.30,0.5,0.5,0,1,0.09,1.15,13.43,0.01,5.00
+306,Knobcone pine forest,0.2,1,1,1,6.00,2,1.4,0.10,0.59,3.39,0.01,17
+307,Palo verde ahrubland,0,0,0,0,0,0,0,0.02,0.19,0,0.18,0
+308,Low sagebrush shrubland,0.06,0.02,0,0,0,0,0,0.05,1.25,0,0.01,0
+309,Blackbrush shrubland,0,0,0,0,0,0,0,0.08,0.28,0,0.02,0
+310,Greasewood shrubland,0.1,0.2,0,0,0,0,0,0.07,0.75,0,0.03,0
+311,Salt-desert shrubland,0.1,0.2,0,0,0,0,0,0.07,0.38,0,0.03,0
+312,Gambel oak woodland or shrubland,0.2,0.2,1,0.5,0,0,0.3,0.09,0.64,8.79,0.02,0
+313,Mountain mahogany woodland or shrubland,0.2,0.2,1,0.5,0,0,0.3,0.08,0.27,1.42,0.02,0
+314,Limber pine - Bristlecone pine forest,0.1,0.4,1.7,4.4,13.6,0,0.2,0.12,0.43,7.45,0.08,1.5
+315,Interior alpine forb grassland,0,0,0,0,0,0,0.5,1.28,0,0,0.07,0
+316,Northern California coastal shrubland,0.1,0.1,0,0,0,0,0,0.27,7.81,0,0.03,0
+317,Rocky Mountain maple forest,0.2,0.8,1.30,0.5,0.5,0,0.5,0.09,0.20,0.79,0.01,5.00
+318,Generic wetland grassland,0,0,0,0,0,0,1,1.19,0,0,0.06,0
+319,Avalanche and landslide chute forest,0.3,0.4,0.90,1.1,0,0,0.3,0,0,2.33,0,0.1
+320,Western larch forest,0.70,2.10,4.4,0.70,3.50,0,1.7,0.05,0.33,8.91,0.06,9.70
+321,Western hemlock - Alaska cedar forest,0.5,1,2,2,3.00,1,3,0.13,0.48,8.98,0.03,6.00
+322,Sitka spruce - Western hemlock forest,1.30,1,1,2,4,5,5,0.13,1.03,17.97,0.07,11
+323,Trembling aspen / Sagebrush boreal woodland,0.2,0.4,0.2,0.1,0,0,0.1,0.18,1.22,2.38,0.02,0
+324,White spruce woodland,0.2,0.5,0.5,0.5,0,0,9,0,0.38,3.10,0,0.4
+325,White spruce - Mountain hemlock forest,0.2,0.2,0.4,0.2,5,0,2,0.08,0.79,9.99,0.02,5.5
+326,Willow - Birch shrubland,0.2,0.5,0.5,0,0,0,0.4,0.04,1.38,0,0.01,0
+327,Sedge - shrub bog,0,0,0,0,0,0,10,0.8,0.15,0,0.20,0
+328,Conifer peatland savanna,0.1,0.2,0.2,0,0,0,10,0.8,0.26,0.17,0.20,0
+329,Mountain heath tundra shrubland,0,0,0,0,0,0,0.25,0.05,2.35,0,0.00,0
+330,American dunegrass grassland,0,0,0,0,0,0,0.25,0.45,0,0,0.05,0
+331,Sitka alder - Salmonberry shrubland,0.2,0.5,0.5,0,0,0,1.5,0.08,3.20,0,0.02,0
+332,Balsam poplar - Paper birch forest,0.2,0.3,1.50,2,1,0,2,0.02,0.4,20.52,0.01,1.5
+333,Dryas tundra shrubland,0,0,0,0,0,0,0,0.05,0.67,0,0.00,0
+334,Cassiope dwarf tundra shrubland,0,0,0,0,0,0,0.25,0.10,2.12,0,0.01,0
+335,Sweetgale shrubland,0,0,0,0,0,0,6,0.10,0.80,0,0.01,0
+336,Alaskan Tidal marsh grassland,0,0,0,0,0,0,1,0.65,0,0,0.35,0
+337,Alaskan freshwater marsh grassland,0,0,0,0,0,0,1,0.65,0,0,0.35,0
+338,Alaskan wet meadow grassland,0,0,0,0,0,0,0.5,0.76,0.34,0,0.04,0
+339,Alaskan herbaceous wet meadow grassland,0,0,0,0,0,0,0.5,0.76,0.00,0,0.04,0
+401,Recently logged timberland - Shrubland cover,0.2,1,2,2,0,0,1.2,0.15,2.41,0.19,0.05,5.80
+402,Recently logged timberland - Woodland cover,0.90,3.60,6.20,10.6,0,0,1.2,0.08,1.11,0.40,0.03,5.80
+403,Ouachita montane oak forest,0.3,0.70,1,0,0,0,0.2,0.07,0.40,2.59,0.07,0
+404,Southern and Central Appalachian cove forest,1,1,2,3.00,2,0.5,1,0.26,1.29,39.02,0.04,2.80
+405,Central and Southern Appalachian montane oak forest,0.3,0.70,1,0,0,0,0.2,0.07,2.23,6.29,0.07,0
+406,West Gulf Coastal Plain mesic hardwood forest,0.5,0.5,1,3.00,1,0.5,0.75,0.06,0.57,21.52,0.02,0
+407,Southern Coastal Plain dry upland hardwood forest,0.6,1.2,1.6,1.50,1.80,0,1,0.06,0.40,18.20,0.024,0.8
+408,Eastern Great Plains tallgrass aspen parkland,0.2,0.5,1,1.50,0,0,0.5,0.13,0.92,6.08,0.01,1
+409,Appalachian shale barren woodland and grassland,0.1,0.2,0.2,0.1,0,0,0.5,0.16,0.18,2.54,0.04,0
+410,Southern Appalachian montane pine forest and woodland,0.1,0.5,0.5,0.1,0,0,1,0.04,4.03,3.29,0.01,0.2
+411,Edwards Plateau limestone savanna and woodland,0.2,0.4,0.8,0.2,0,0,0.2,0.18,0.75,2.26,0.046,0
+412,Acadian - Appalachian alpine and subalpine woodlands and barrens,0.2,0.70,0.70,0,0,0,1,0.03,1.38,0.40,0.00,0
+413,Northern oak barren woodland and grassland,0.2,0.5,0.5,1,0.5,0,0.4,0.3,0.35,6.35,0.20,0.2
+414,Nashville Basin limestone glade and woodland,0.2,0.4,0.8,0,0,0,0.2,0.48,0.54,4.41,0.12,0
+415,Cumberland sandstone glade and barrens,0,0,0,0,0,0,0.2,0.77,0.02,0.14,0.14,0
+416,Calcareous glade and woodland,0.1,0.1,0.1,0.1,0,0,0.4,0.26,0.29,1.62,0.05,0
+417,West Gulf Coastal Plain glade and barrens,0,0,0,0,0,0,0.2,0.43,0,0.20,0.08,0
+418,Great Lakes alvar savanna and shrubland,0.1,0.1,0.1,0.1,0,0,0.4,0.26,0.11,0.61,0.04,0
+419,Llano Uplift acidic woodland and glade,0.2,0.4,0,0.2,0,0,0.2,0.18,0.80,2.29,0.05,0
+420,Great Lakes wet-mesic lakeplain prairie grassland,0,0,0,0,0,0,1,1.34,0.20,0,0.47,0
+421,Bluegrass savanna and woodland,0.2,0.4,0.8,0,0,0,0.3,2,0.06,10.78,0.5,0
+422,Arkansas Valley prairie and woodland,0,0,0,0,0,0,1,1.10,0,1.76,0.45,0
+423,Highland Rim prairie and barrens,0,0,0,0,0,0,1,1.10,0,1.96,0.45,0
+424,Southern Coastal Plain nonriverine cypress dome forest,0.2,0.2,0.5,0.5,0.5,0,4,0.12,1.39,11.15,0.03,1
+425,Coastal Plain seepage swamp and baygall forest,0.5,0.5,1,1.50,0.5,0,1.5,0.06,2.55,21.89,0.02,2.00
+426,Tamaulipan riparian forest,0.2,0.4,0.8,0.2,0.5,0,0.1,0.24,0.3,11.27,0.06,0.7
+427,Laurentian - Acadian alkaline swamp forest,0.4,1,2,4,2,0,4,0.02,0.47,6.76,0.003,3
+428,Melaleuca quinquenervia forest,0.3,0.3,0.5,0.5,0,0,1.5,0.16,0,19.88,0.07,0
+429,Introduced upland vegetation - Treed,0.4,0.70,1.40,1.80,1.80,0,1,0.08,0.73,13.74,0.03,1.20
+430,Mississippi River alluvial plain loess slope forest,0.6,1.2,1.6,1.50,1.80,0,1,0.06,1.20,15.31,0.03,1.6
+431,East Gulf Coastal Plain limestone forest,0.6,1,1.2,1.2,1,0,1,0.26,1.34,14.82,0.04,0.8
+432,South Florida hardwood hammock forest,0.1,0.2,1.50,1.50,1.50,0,1,0.04,1.78,6.22,0.01,1
+433,Atlantic Coastal Plain maritime grassland and woodland,0.2,0.4,0.8,0.2,0,0,0.2,0.48,0.75,0.80,0.12,0
+434,Mississippi River dune woodland and forest,0.2,0.5,0.5,0.5,0.2,0,0.4,0.24,0.57,6.53,0.16,0.2
+435,Tamaulipan clay grassland,0,0,0,0,0,0,0.2,0.77,0.06,0,0.13,0
+436,South Texas sand sheet grassland,0,0,0,0,0,0,0,1.28,0,0,0.43,0
+437,South Texas dune and coastal grassland,0,0,0,0,0,0,0,1.28,0,0,0.43,0
+438,South Florida cypress dome forest,0.2,0.2,0.5,0.5,0.5,0,12,0.04,0.90,6.44,0.01,1
+439,Carolina bay savanna,0.1,0.16,0.14,0.2,0,0,0.5,0.84,0.55,0.57,0.21,0
+440,Caribbean swamp forest,0.2,0.2,0.5,0.5,0.5,0,4,0.04,0.90,10.79,0.01,1
+441,Central Interior and Appalachian swamp forest,0.2,0.2,1.50,1.50,1.50,0,2,0.34,0.50,0.78,0.06,1
+442,Great Plains prairie pothole grassland,0,0,0,0,0,0,1.5,1.37,0,0,0.74,0
+443,Eastern Great Plains marsh grassland,0,0,0,0,0,0,1.5,1.37,0,0,0.74,0
+445,Central Interior and Appalachian wetland grassland,0,0,0,0,0,0,3,0.84,0.45,0,0.46,0
+448,Atlantic Coastal Plain nonriverine swamp forest,0.2,0.2,0.5,1,1,1,2,0.09,4.90,10.94,0.022,5
+449,North-central Interior wet flatwoods forest,0.1,0.2,1.50,1.50,1.50,0,1.5,0.07,0.71,18.05,0.01,1
+450,Edwards Plateau slope forest and woodland,0.3,0.6,1.2,0.4,0.2,0,1,0.18,0.73,7.02,0.046,0.3
+451,Edwards Plateau mesic canyon forest,0.3,0.6,1.2,0.4,0.2,0,1,0.18,0.72,6.75,0.046,0.3
+453,Ruderal upland - Old field grassland,0,0,0,0,0,0,0,1.34,1.02,1.13,0.47,0
+454,Ruderal forest - Northern and Central hardwood and conifer,0.4,0.5,1,1,2,0,1,0.10,1.76,12.89,0.01,1.5
+455,Managed tree plantation - Northern and Central ,0.5,0.5,1,1,1.50,0,1,0.15,0.16,10.59,0.05,5.50
+456,Introduced wetland vegetation - Tree,0.5,1,3.00,3.00,0,0,1,0.21,0.46,7.19,0.09,1
+457,South Florida coastal strand and maritime hammock forest,0.5,0.5,0.5,1.50,1,0,4,0,3.70,6.72,0,2.50
+458,South Texas lomas shrubland,0,0,0,0,0,0,0,0.08,5.75,0,0.08,0
+900,Water,0.5,0.25,0.25,0,0,0,0,0,2.2,0,1,1

@@ -1,12 +1,12 @@
 #*****************************************************************************
 #
-#  BlueSky Framework - Controls the estimation of emissions, incorporation of
-#                      meteorology, and the use of dispersion models to
+#  BlueSky Framework - Controls the estimation of emissions, incorporation of 
+#                      meteorology, and the use of dispersion models to 
 #                      forecast smoke impacts from fires.
-#  Copyright (C) 2003-2006  USDA Forest Service - Pacific Northwest Wildland
+#  Copyright (C) 2003-2006  USDA Forest Service - Pacific Northwest Wildland 
 #                           Fire Sciences Laboratory
-#  BlueSky Framework - Version 3.5.1
-#  Copyright (C) 2007-2009  USDA Forest Service - Pacific Northwest Wildland Fire
+#  BlueSky Framework - Version 3.5.1    
+#  Copyright (C) 2007-2009  USDA Forest Service - Pacific Northwest Wildland Fire 
 #                      Sciences Laboratory and Sonoma Technology, Inc.
 #                      All rights reserved.
 #
@@ -36,12 +36,12 @@ def aquipt_date_str(date):
     """Return the "AQUIPT standard" hysplit initialization date string"""
     return date.strftime("%Y%m%d%H")
 
-
+    
 class InputAquiptARL(Process):
     """Read ARL-format meteorological data for AQUIPT"""
 
     def init(self):
-        self.declare_input("aquipt_info", "AquiptInfo")
+        self.declare_input("aquipt_info", "AquiptInfo")      
         self.declare_output("aquipt_info", "AquiptInfo")
 
     def run(self, context):
@@ -118,7 +118,7 @@ class InputAquiptARL(Process):
                     metfiles += glob(metglob)
                     date += timedelta(days=1)
                 metfiles = sorted(list(set(metfiles)))  # Remove duplicates
-
+                
             elif self.config("USE_CATALOG_INDEXING", bool):
                 self.log.info("Using catalog indexed ARL data")
                 date_naive = BSDateTime(init_date.year, init_date.month, init_date.day, init_date.hour,
@@ -131,7 +131,7 @@ class InputAquiptARL(Process):
                 for inputfile in inputfiles:
                     if os.path.basename(inputfile) not in [os.path.basename(metfile) for metfile in metfiles]:
                         metfiles.append(inputfile)
-
+                
             else:
                 metglob = init_date.strftime(ARL_PATTERN)
                 metfiles += sorted(glob(metglob))
@@ -142,7 +142,7 @@ class InputAquiptARL(Process):
 
         # Info and Debugging
         nruns = len(aquipt_info["dispersion_dates"])
-        self.log.log(SUMMARY, {"arl_data": { "found": nmet, "total_initializations": nruns}})
+        self.log.log(SUMMARY, "Found ARL data for %d out of %d initializations." % (nmet, nruns))
         self.log.info("Planning to run AQUIPT with %d HYSPLIT simulations" % nmet)
         if nruns != nmet:
             self.log.warn("ARL data not found for all requested HYSPLIT initializations.")
@@ -245,7 +245,7 @@ class OutputAquipt(Process):
 
         # Send off the aggregate output file
         netcdf_file = context.full_path("hysplit_stat_2d")
-        dispersion_filename = os.path.join(self.config("OUTPUT_DIR"), 'data', self.config("DISPERSION_FILE"))
+        dispersion_filename = os.path.join(self.config("OUTPUT_DIR"), self.config("DISPERSION_FILE"))
         if context.file_exists(netcdf_file):
             shutil.copy(netcdf_file, dispersion_filename)
 
@@ -377,7 +377,7 @@ class AquiptHYSPLITDispersion(Dispersion):
                 self.log.info(f)
 
             # Run HYSPLIT
-            self.log.info("Running HYSPLIT for %s. AQUIPT simulation %s of %s" %
+            self.log.info("Running HYSPLIT for %s. AQUIPT simulation %s of %s" % 
                           (aquipt_date_str(init_date), nruns_executed + 1, nruns_expected))
             if self.config("MPI", bool):
                 context.execute(mpiexec, "-n", str(NCPUS), HYSPLIT_MPI_BINARY)
@@ -422,7 +422,7 @@ class AquiptHYSPLITDispersion(Dispersion):
 
         # DispersionData output
         dispersion_tarball = context.full_path("smoke_dispersion.tar.gz")
-        with tarfile.open(dispersion_tarball, 'w:gz') as tar:
+        with tarfile.open(dispersion_tarball, 'w:gz') as tar:    
             for f in aquiptInfo["dispersion_files"]:
                 tar.add(f, arcname=os.path.basename(f))
 
@@ -504,7 +504,7 @@ class AquiptHYSPLITDispersion(Dispersion):
         return verticalMethod
 
     def writeEmissions(self, filteredFires, modelStart, hoursToRun, emissionsFile, reductionFactor, num_quantiles):
-        # Note: HYSPLIT can accept concentrations in any units, but for
+        # Note: HYSPLIT can accept concentrations in any units, but for 
         # consistency with other dispersion models, we convert to grams here.
         GRAMS_PER_TON = 907184.74
 
@@ -515,8 +515,8 @@ class AquiptHYSPLITDispersion(Dispersion):
         # emissions into the model.
         SMOLDER_HEIGHT = self.config("SMOLDER_HEIGHT", float)
 
-        # For AQUIPT, track the earliest ignition date of each fire.
-        # The fire growth models create new fire records with same ID,
+        # For AQUIPT, track the earliest ignition date of each fire.  
+        # The fire growth models create new fire records with same ID, 
         # but different date_time.  We'll use this as the "base" date_time
         # from which we'll apply any array index offsets for the current
         # modelDate.
@@ -567,7 +567,7 @@ class AquiptHYSPLITDispersion(Dispersion):
 
                     # For AQUIPT, there is a disconnect between modelStart and fire date_time.
                     # The goal (for now) is to use identical emissions for each HYSPLIT run.
-                    # To do this without ignoring the data added by a growth model,
+                    # To do this without ignoring the data added by a growth model, 
                     # calculate the padding based on the date_time and the earliest
                     # ignition date for the fire.  This will be independent of modelDate,
                     # and assumes that all fires are ignighted on the model initialization day.
@@ -583,7 +583,7 @@ class AquiptHYSPLITDispersion(Dispersion):
                     num_hours = min(len(fireLoc.emissions.heat), len(fireLoc.plume_rise.hours))
                     h = hour - padding_hours
 
-                    # If we don't have real data for the given timestep, we need to stick in
+                    # If we don't have real data for the given timestep, we need to stick in 
                     # dummy records anyway (so we have the correct number of sources).
                     if h < 0 or h >= num_hours:
                         noEmis += 1
@@ -626,9 +626,9 @@ class AquiptHYSPLITDispersion(Dispersion):
 
                         if not dummy:
                             # Loop through the heights (20 quantiles of smoke density).
-                            # For the unreduced case, we loop through 20 quantiles, but we have
-                            # 21 quantile-edge measurements.  So for each quantile gap, we need
-                            # to find a point halfway  between the two edges and inject 1/20th
+                            # For the unreduced case, we loop through 20 quantiles, but we have 
+                            # 21 quantile-edge measurements.  So for each quantile gap, we need 
+                            # to find a point halfway  between the two edges and inject 1/20th 
                             # of the total emissions there.
 
                             # KJC optimization...
@@ -645,21 +645,21 @@ class AquiptHYSPLITDispersion(Dispersion):
                             # Total PM2.5 entrained (lofted in the plume)
                             pm25_entrained = pm25_emitted * entrainment_fraction
                             # Inject the proper fraction of the entrained PM2.5 in each quantile gap.
-                            pm25_injected = pm25_entrained / float(num_quantiles)
+                            pm25_injected = pm25_entrained * (float(reductionFactor)/float(num_quantiles))
 
                         # Write the record to the file
                         emis.write(record_fmt % (dt_str, lat, lon, height_meters, pm25_injected, area_meters, heat))
 
                 if noEmis > 0:
                     self.log.debug("%d of %d fires had no emissions for hour %d", noEmis, num_fires, hour)
-
+    
     def writeControlFile(self, filteredFires, arl_files, modelStart, hoursToRun, controlFile, concFile, num_quantiles):
         num_fires = len(filteredFires)
         num_heights = num_quantiles + 1  # number of quantiles used, plus ground level
         num_sources = num_fires * num_heights
 
-        # An arbitrary height value.  Used for the default source height
-        # in the CONTROL file.  This can be anything we want, because
+        # An arbitrary height value.  Used for the default source height 
+        # in the CONTROL file.  This can be anything we want, because 
         # the actual source heights are overridden in the EMISS.CFG file.
         sourceHeight = 15.0
 
@@ -731,11 +731,11 @@ class AquiptHYSPLITDispersion(Dispersion):
             # Number of simultaneous concentration grids
             f.write("1\n")
 
-            # NOTE: The size of the output concentration grid is specified
-            # here, but it appears that the ICHEM=4 option in the SETUP.CFG
-            # file may override these settings and make the sampling grid
+            # NOTE: The size of the output concentration grid is specified 
+            # here, but it appears that the ICHEM=4 option in the SETUP.CFG 
+            # file may override these settings and make the sampling grid 
             # correspond to the input met grid instead...
-            # But Ken's testing seems to indicate that this is not the case...
+            # But Ken's testing seems to indicate that this is not the case...          
 
             # Sampling grid center location (latitude, longitude)
             f.write("%9.3f %9.3f\n" % (centerLat, centerLon))
@@ -767,10 +767,10 @@ class AquiptHYSPLITDispersion(Dispersion):
             # Particle diameter (um), density (g/cc), shape
             f.write("1.0 1.0 1.0\n")
 
-            # Dry deposition:
-            #    deposition velocity (m/s),
+            # Dry deposition: 
+            #    deposition velocity (m/s), 
             #    molecular weight (g/mol),
-            #    surface reactivity ratio,
+            #    surface reactivity ratio, 
             #    diffusivity ratio,
             #    effective Henry's constant
             f.write("0.0 0.0 0.0 0.0 0.0\n")
@@ -789,7 +789,7 @@ class AquiptHYSPLITDispersion(Dispersion):
 
     def writeSetupFile(self, filteredFires, modelStart, emissionsFile, setupFile, num_quantiles, ninit_val):
         # Advanced setup options
-        # adapted from Robert's HysplitGFS Perl script
+        # adapted from Robert's HysplitGFS Perl script        
 
         khmax_val = int(self.config("KHMAX"))
         ndump_val = int(self.config("NDUMP"))
@@ -850,7 +850,7 @@ class AquiptHYSPLITDispersion(Dispersion):
 
             # poutf: particle output/dump file
             if self.config("MAKE_INIT_FILE", bool):
-                f.write("  POUTF = \"PARDUMP\",\n")
+                f.write("  POUTF = \"PARDUMP\",\n") 
                 self.log.info("Dumping particles to PARDUMP starting at %s every %s hours" % (dump_datetime, ncycl_val))
 
             # ndump: when/how often to dump a poutf file negative values indicate to
@@ -861,7 +861,7 @@ class AquiptHYSPLITDispersion(Dispersion):
 
             # ncycl: set the interval at which time a pardump file is written after the
             #        1st file (which is first created at T = ndump hours after the
-            #        start of the model simulation
+            #        start of the model simulation 
             if self.config("MAKE_INIT_FILE", bool):
                 f.write("  NCYCL = %d,\n" % ncycl_val)
 

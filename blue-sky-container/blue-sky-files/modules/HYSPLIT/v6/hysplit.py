@@ -1,12 +1,12 @@
 #*****************************************************************************
 #
-#  BlueSky Framework - Controls the estimation of emissions, incorporation of
-#                      meteorology, and the use of dispersion models to
+#  BlueSky Framework - Controls the estimation of emissions, incorporation of 
+#                      meteorology, and the use of dispersion models to 
 #                      forecast smoke impacts from fires.
-#  Copyright (C) 2003-2006  USDA Forest Service - Pacific Northwest Wildland
+#  Copyright (C) 2003-2006  USDA Forest Service - Pacific Northwest Wildland 
 #                           Fire Sciences Laboratory
-#  BlueSky Framework - Version 3.5.1
-#  Copyright (C) 2007-2009  USDA Forest Service - Pacific Northwest Wildland Fire
+#  BlueSky Framework - Version 3.5.1    
+#  Copyright (C) 2007-2009  USDA Forest Service - Pacific Northwest Wildland Fire 
 #                      Sciences Laboratory and Sonoma Technology, Inc.
 #                      All rights reserved.
 #
@@ -48,17 +48,17 @@ from dispersion import Dispersion, DispersionMet
 class InputARL(Process):
     """ Read ARL-format input meteorological data
     """
-
-    def init(self):
+    
+    def init(self):       
         self.declare_input("met_info", "MetInfo")
         self.declare_output("met_info", "MetInfo")
-
+ 
     def run(self, context):
         ARL_PATTERN = self.config("ARL_PATTERN")
 
         # added lines for strftime conversion in path names (rcs)
         pathdate = self.config("DATE",BSDateTime)
-
+        
         met = self.get_input("met_info")
         if met is None:
             met = construct_type("MetInfo")
@@ -131,7 +131,7 @@ class InputARL(Process):
 
         if not len(metfiles):
             if self.config("STOP_IF_NO_MET", bool):
-                raise Exception("Found no matching ARL files. Stop.")
+                raise Exception("Found no matching ARL files. Stop.")  
             self.log.warn("Found no matching ARL files; meteorological data are not available")
             self.log.debug("No ARL files matched '%s'", os.path.basename(ARL_PATTERN))
             self.set_output("met_info", met)
@@ -151,7 +151,7 @@ class InputARL(Process):
             if fileInfo["end"] >= met["dispersion_start"] and fileInfo["start"] <= met["dispersion_end"]:
                 met["files"].append(fileInfo)
             else:
-                self.log.debug("Ignoring file %s because it's outside the dispersion range",
+                self.log.debug("Ignoring file %s because it's outside the dispersion range", 
                                os.path.basename(arlfile))
 
             if not len(met["files"]):
@@ -161,10 +161,9 @@ class InputARL(Process):
 
         met_start = min([f["start"] for f in met["files"]])
         met_end = max(f["end"] for f in met["files"])
-
-        self.log.log(SUMMARY, {"available_meteorology":{
-            "from": met_start.strftime('%Y%m%d %HZ'),
-            "to": met_end.strftime('%Y%m%d %HZ')}})
+        
+        self.log.log(SUMMARY, "Available meteorology: " + met_start.strftime('%Y%m%d %HZ') + 
+                      " to " + met_end.strftime('%Y%m%d %HZ'))
 
         if not ((met_start <= met["dispersion_start"]) and (met_end >= met["dispersion_start"])):
             raise Exception("Insufficient ARL data to run selected dispersion period")
@@ -186,21 +185,21 @@ class InputARL(Process):
 
     def ARLsize(self,f):
         """Retrieve ARL file information using arldata module"""
-
+        
         try:
             arlfile = arldata.ARLFile( f, fast=True )
         except:
             raise Exception("Unable to decode ARL file %s" % f)
-
+        
         fileInfo = construct_type("MetFileInfo")
         fileInfo["filename"] = arlfile.file
         dt = arlfile.start
         fileInfo["start"] = BSDateTime(dt.year, dt.month, dt.day, dt.hour, dt.minute, dt.second, dt.microsecond, UTC())
         dt = arlfile.end
         fileInfo["end"] = BSDateTime(dt.year, dt.month, dt.day, dt.hour, dt.minute, dt.second, dt.microsecond, UTC())
-
+        
         domainInfo = construct_type("MetDomainInfo")
-        domainInfo["domainID"] = arlfile.mainHeader.data_source
+        domainInfo["domainID"] = arlfile.mainHeader.data_source    
         domainInfo["lonC"] = arlfile.mainHeader.tangent_long    # Projection central longitude
         domainInfo["latC"] = arlfile.mainHeader.tangent_lat     # Projection central latitude
         domainInfo["alpha"] = arlfile.mainHeader.cone_angle     # Standard latitude
@@ -210,7 +209,7 @@ class InputARL(Process):
         domainInfo["nyCRS"] = arlfile.mainHeader.numb_y_pnts    # north-south grid dimensions
         domainInfo["dxKM"] = arlfile.mainHeader.grid_size       # grid spacing in km
 
-        # TODO: Use projection library to determine these values.  These are used by
+        # TODO: Use projection library to determine these values.  These are used by 
         #       hysplitDispersion to figure out what the default sampling grid should be.
         #       For now, just approximate CONUS coverage. (KJC)
         if domainInfo["domainID"].strip() in ['EDAS','ETA','NAM']:
@@ -229,7 +228,7 @@ class InputARL(Process):
             domainInfo["lat_min"] = 20.0
             domainInfo["lat_max"] = 55.0
 
-        return fileInfo, domainInfo
+        return fileInfo, domainInfo 
 
     def output_handler(self, logger, output, is_stderr):
         if is_stderr:
@@ -241,7 +240,7 @@ class InputARL(Process):
 class ARLLocalMet(Process):
     """ Extract fire-local meteorological data
     """
-
+    
     def init(self):
         self.declare_input("met_info", "MetInfo")
         self.declare_input("fires", "FireInformation")
@@ -251,41 +250,41 @@ class ARLLocalMet(Process):
     def run(self, context):
         met_info = self.get_input("met_info")
         fireInfo = self.get_input("fires")
-
+        
         if met_info.file_type != "ARL":
             raise Exception("ARLLocalMet can only be used with ARL-format met data")
-
+        
         # TO DO: This should be improved in a future version...
         self.log.info("Unable to extract local met from ARL data; elevation is undefined")
         for fireLoc in fireInfo.locations():
             fireLoc["elevation"] = 0
-
+            
         self.set_output("met_info", met_info)
         self.set_output("fires", fireInfo)
 
 class MM5ToARL(TrajectoryMet, DispersionMet):
     """ Convert MM5-format met data to ARL format
     """
-
+    
     def init(self):
         self.declare_input("met_info", "MetInfo")
         self.declare_output("met_info", "MetInfo")
 
     def run(self, context):
         met_info = self.get_input("met_info")
-
+        
         if not len(met_info["files"]):
             raise AssertionError("No input meteorological data available! Stop.")
 
         if not context.get_kept_file("hysplit.arl", met_info):
             self.log.info("Converting MM5 data into ARL format for the HYSPLIT model")
-
+            
             mm5files = [f["filename"] for f in met_info["files"]]
             for mm5file in mm5files:
                 context.link_file(mm5file)
-
+            
             self.write_mm5toarl_inp(context, mm5files, "hysplit.arl")
-
+                
             MM52ARL_BINARY = self.config("MM52ARL_BINARY")
             context.execute(MM52ARL_BINARY)
             context.archive_file("mm5toarl.inp")
@@ -302,25 +301,25 @@ class MM5ToARL(TrajectoryMet, DispersionMet):
         metFile.end = metInfo.met_end
         metInfo.files = [metFile]
         metInfo.file_type = "ARL"
-
+        
         if self.config("MM5_NEST", bool):
             if not len(met_info["files_nest"]):
                 raise AssertionError("No nested input meteorological data available! Stop.")
 
             if not context.get_kept_file("hysplit_nest.arl", met_info):
                 self.log.info("Converting Nested MM5 data into ARL format for the HYSPLIT model")
-
+            
                 mm5files = [f["filename"] for f in met_info["files_nest"]]
                 for mm5file in mm5files:
                      context.link_file(mm5file)
-
+            
                 self.write_mm5toarl_inp(context, mm5files, "hysplit_nest.arl")
-
+                
                 MM52ARL_BINARY = self.config("MM52ARL_BINARY")
                 context.execute(MM52ARL_BINARY)
                 context.keep_file("hysplit_nest.arl", met_info)
 
-            hysplit_nest_arl = context.full_path("hysplit_nest.arl")
+            hysplit_nest_arl = context.full_path("hysplit_nest.arl") 
             metFileNest = construct_type("MetFileInfo")
             metFileNest.filename = hysplit_nest_arl
             metFileNest.start = metInfo.met_start
@@ -346,23 +345,23 @@ def getVerticalMethod(self):
     # Vertical motion choices:
     verticalChoices = dict(DATA=0, ISOB=1, ISEN=2, DENS=3, SIGMA=4, DIVERG=5, ETA=6)
     VERTICAL_METHOD = self.config("VERTICAL_METHOD")
-
+    
     try:
         verticalMethod = verticalChoices[VERTICAL_METHOD]
     except KeyError:
         verticalMethod = verticalChoices["DATA"]
-
+    
     return verticalMethod
 
 class WRFToARL(TrajectoryMet, DispersionMet):
     """ Convert WRF-format met data to ARL format.
-
+    
     This method uses the executable configured with WRFTOARL_BINARY
     to convert WRF NetCDF files to ARL formatted files one at a time
     and then concatenates them to create a single "hysplit.arl" file
     containing all met data.
     """
-
+    
     def init(self):
         self.declare_input("met_info", "MetInfo")
         self.declare_output("met_info", "MetInfo")
@@ -371,43 +370,43 @@ class WRFToARL(TrajectoryMet, DispersionMet):
         met_info = self.get_input("met_info")
 
         WRFTOARL_BINARY = self.config("WRFTOARL_BINARY")
-
+        
         hysplit_arl = context.full_path("hysplit.arl")
-
+        
         if not len(met_info["files"]):
             raise AssertionError("No input meteorological data available! Stop.")
 
         if not context.get_kept_file("hysplit.arl", met_info):
             self.log.info("Converting WRF data into ARL format for the HYSPLIT model")
-
+            
             # NOTE:  Each time WRFTOARL_BINARY is run it will generate WRFDATA.BIN
-            # NOTE:  and WRFDATA.CFG.  WRFDATA.CFG does not change as long as the
-            # NOTE:  spatial domain stays the same.  So we need to create an empty
+            # NOTE:  and WRFDATA.CFG.  WRFDATA.CFG does not change as long as the 
+            # NOTE:  spatial domain stays the same.  So we need to create an empty 
             # NOTE:  "hysplit.arl" file where we concatenate all the individual
             # NOTE:  WRFDATA.BIN files.
-
+            
             # TODO:  Do we need to clean up the WRFDATA.BIN and WRFDATA.CFG files?
 
             hysplit_arl_file = open(hysplit_arl, 'wb')
-
+            
             wrffiles = [f["filename"] for f in met_info["files"]]
             for wrffile in wrffiles:
-                context.link_file(wrffile)
+                context.link_file(wrffile)                
                 self.binary_output = ""
                 context.execute(WRFTOARL_BINARY, os.path.basename(wrffile))
                 # TODO:  Does binary_output contain the expected output?
-                assert ("ERROR" not in self.binary_output), self.binary_output
+                assert ("ERROR" not in self.binary_output), self.binary_output                
                 wrfdata_bin = context.full_path("WRFDATA.BIN")
                 wrfdata_bin_file = open(wrfdata_bin, 'rb')
                 copyfileobj(wrfdata_bin_file, hysplit_arl_file)
                 wrfdata_bin_file.close()
                 context.delete_file("WRFDATA.BIN")
-
+                
             hysplit_arl_file.close()
-
+            
             context.archive_file("WRFDATA.CFG")
             context.keep_file("hysplit.arl", met_info)
-
+            
         # Build new MetInfo object
         metInfo = construct_type("MetInfo", met_info)
         metFile = construct_type("MetFileInfo")
@@ -416,11 +415,11 @@ class WRFToARL(TrajectoryMet, DispersionMet):
         metFile.end = metInfo.met_end
         metInfo.files = [metFile]
         metInfo.file_type = "ARL"
-
+        
         if self.config("WRF_NEST", bool):
-
+          
             hysplit_nest_arl = context.full_path("hysplit_nest.arl")
-
+            
             if not len(met_info["files_nest"]):
                 raise AssertionError("No nested input meteorological data available! Stop.")
 
@@ -428,26 +427,26 @@ class WRFToARL(TrajectoryMet, DispersionMet):
                 self.log.info("Converting Nested WRF data into ARL format for the HYSPLIT model")
 
                 hysplit_nest_arl_file = open(hysplit_nest_arl, 'wb')
-
+                            
                 wrffiles = [f["filename"] for f in met_info["files_nest"]]
                 for wrffile in wrffiles:
                     context.link_file(wrffile)
                     self.binary_output = ""
                     context.execute(WRFTOARL_BINARY, os.path.basename(wrffile))
                     # TODO:  Does binary_output contain the expected output?
-                    assert ("ERROR" not in self.binary_output), self.binary_output
+                    assert ("ERROR" not in self.binary_output), self.binary_output                
                     wrfdata_bin = context.full_path("WRFDATA.BIN")
                     wrfdata_bin_file = open(wrfdata_bin, 'rb')
                     copyfileobj(wrfdata_bin_file, hysplit_nest_arl_file)
                     wrfdata_bin_file.close()
                     context.delete_file("WRFDATA.BIN")
-
+                    
                 hysplit_nest_arl_file.close()
-
+                
                 context.archive_file("WRFDATA.CFG")
                 context.keep_file("hysplit_nest.arl", met_info)
-
-            # Build new MetInfo object for output
+    
+            # Build new MetInfo object for output            
             metFileNest = construct_type("MetFileInfo")
             metFileNest.filename = hysplit_nest_arl
             metFileNest.start = metInfo.met_start
@@ -467,7 +466,7 @@ class WRFToARL(TrajectoryMet, DispersionMet):
 
 class HYSPLITTrajectory(Trajectory):
     """ HYSPLIT Trajectory model
-
+    
     HYSPLIT Trajectory model version 4.5.
     """
 
@@ -476,10 +475,10 @@ class HYSPLITTrajectory(Trajectory):
 
         fireInfo = self.get_input("fires")
         met_info = self.get_input("met_info")
-
+        
         if met_info.file_type != "ARL":
             raise Exception("HYSPLIT requires ARL-format meteorological data")
-
+        
         hysplit_arl = met_info.files[0].filename
 
         HYSPLIT_BINARY = self.config("HYSPLIT_BINARY")
@@ -487,7 +486,7 @@ class HYSPLITTrajectory(Trajectory):
         HOURS_TO_RUN_TRAJECTORY = self.config("HOURS_TO_RUN_TRAJECTORY", int)
         NUM_CONSECUTIVE_TRAJECTORIES = self.config("NUM_CONSECUTIVE_TRAJECTORIES", int)
         modelTop = self.config("TOP_OF_MODEL_DOMAIN", float)
-
+        
         verticalMethod = getVerticalMethod(self)
 
         for fireLoc in fireInfo.locations():
@@ -495,7 +494,7 @@ class HYSPLITTrajectory(Trajectory):
             context.push_dir(fireLoc["id"])
 
             context.link_file(hysplit_arl)
-
+            
             fireLoc["metadata"]["extra:hysplit_files"] = dict()
 
             for hour in range(NUM_CONSECUTIVE_TRAJECTORIES):
@@ -506,7 +505,7 @@ class HYSPLITTrajectory(Trajectory):
                 trjfilename = "%s.trj" % basename
 
                 with open(context.full_path("CONTROL"), "w") as outfile:
-                    outfile.write("%02d %02d %02d %02d\n" % (traj_datetime.year-2000, traj_datetime.month,
+                    outfile.write("%02d %02d %02d %02d\n" % (traj_datetime.year-2000, traj_datetime.month, 
                                                              traj_datetime.day, traj_datetime.hour))
                     outfile.write("1\n")        # run one trajectory at a time
                     outfile.write("%s %s 10\n" % (fireLoc["latitude"], fireLoc["longitude"]))
@@ -522,11 +521,11 @@ class HYSPLITTrajectory(Trajectory):
                 context.execute(HYSPLIT_BINARY)
 
                 context.trash_file("CONTROL")
-
+                
                 fireLoc["metadata"]["extra:hysplit_files"][hour] = context.full_path(trjfilename)
 
             context.pop_dir()
-
+            
         self.set_output("fires", fireInfo)
 
 class OutputTrajectoryArchive(Process):
@@ -535,9 +534,9 @@ class OutputTrajectoryArchive(Process):
 
     def run(self, context):
         fireInfo = self.get_input("fires")
-        output_file = os.path.join(self.config("OUTPUT_DIR"),
+        output_file = os.path.join(self.config("OUTPUT_DIR"), 
                                    self.config("TrajectoryTarballFile"))
-
+        
         count = 0
         wroteLocs = 0
         wroteFiles = 0
@@ -553,7 +552,7 @@ class OutputTrajectoryArchive(Process):
                         arcpath = os.path.basename(realpath)
                         tar.add(realpath, arcpath)
                         wroteFiles += 1
-
+        
         if count > 0 and wroteLocs == 0:
             self.log.debug("No fires contain trajectory information; skip...")
         elif wroteLocs > 0:
@@ -562,31 +561,31 @@ class OutputTrajectoryArchive(Process):
                 self.log.info("Wrote %s files for %s fires (%s fires had no trajectories)", wroteFiles, wroteLocs, skipped)
             else:
                 self.log.info("Wrote %s files for %s fires", wroteFiles, wroteLocs)
-
+        
 class HYSPLITDispersion(Dispersion):
     """ HYSPLIT Dispersion model
 
     HYSPLIT Concentration model version 4.8 """
-
+    
     def run(self, context):
         self.log.info("Running the HYSPLIT Dispersion model")
 
         fireInfo = self.get_input("fires")
         metInfo = self.get_input("met_info")
-
+        
         arlfiles = [f["filename"] for f in metInfo["files"]]
         for arlfile in arlfiles:
             self.log.info(arlfile)
-
+        
         if metInfo.file_type != "ARL":
             raise Exception("HYSPLIT requires ARL-format meteorological data")
-
+        
         for f in metInfo.files:
             context.link_file(f.filename)
 
         HYSPLIT_BINARY = self.config("HYSPLIT_BINARY")
         HYSPLIT2NETCDF_BINARY = self.config("HYSPLIT2NETCDF_BINARY")
-
+        
         # Number of quantiles in vertical emissions allocation scheme
         NQUANTILES = 20
 
@@ -597,41 +596,41 @@ class HYSPLITDispersion(Dispersion):
         modelEnd = min(metInfo.dispersion_end, metInfo.met_end)
         dur = modelEnd - modelStart
         hoursToRun = ((dur.days * 86400) + dur.seconds) / 3600
-
+        
         filteredFires = list(self.filterFires(fireInfo))
-
+        
         if(len(filteredFires) == 0):
             raise Exception("No fires have data for HYSPLIT dispersion")
-
+        
         emissionsFile = context.full_path("EMISS.CFG")
         controlFile = context.full_path("CONTROL")
         setupFile = context.full_path("SETUP.CFG")
         messageFile = context.full_path("MESSAGE")
         outputConcFile = context.full_path("hysplit.con")
         outputFile = context.full_path("hysplit_conc.nc")
-
+        
         # Default value for NINIT for use in set up file.  0 equals no particle initialization
         ninit_val = "0"
-
+        
         if self.config("READ_INIT_FILE", bool):
            parinit_file = self.config("DISPERSION_FOLDER") + "/PARINIT"
-
-           if not context.file_exists(parinit_file):
-              if self.config("STOP_IF_NO_PARINIT", bool):
+           
+           if not context.file_exists(parinit_file):          
+              if self.config("STOP_IF_NO_PARINIT", bool):  
                  raise Exception("Found no matching particle initialization files. Stop.")
               else:
                  self.log.warn("No matching particle initialization file found; Using no particle initialization")
-                 self.log.debug("Particle initialization file not found '%s'", parinit_file)
+                 self.log.debug("Particle initialization file not found '%s'", parinit_file)  
            else:
               context.link_file(parinit_file)
               self.log.info("Using particle initialization file %s" % parinit_file)
               ninit_val = "1"
-
+                      
         context.archive_file(emissionsFile)
         context.archive_file(controlFile)
         context.archive_file(setupFile)
         context.archive_file(messageFile)
-
+        
         self.writeEmissions(filteredFires, modelStart, hoursToRun, emissionsFile, reductionFactor, num_output_quantiles)
         self.writeControlFile(filteredFires, metInfo, modelStart, hoursToRun, controlFile, outputConcFile, num_output_quantiles)
 
@@ -648,10 +647,10 @@ class HYSPLITDispersion(Dispersion):
             self.writeSetupFile(filteredFires, modelStart, emissionsFile, setupFile, num_output_quantiles, ninit_val)
 
         context.execute(HYSPLIT_BINARY)
-
+        
         if not os.path.exists(outputConcFile):
             raise AssertionError("HYSPLIT failed, check MESSAGE file for details")
-
+            
         self.log.info("Converting HYSPLIT output to NetCDF format")
         context.execute(HYSPLIT2NETCDF_BINARY,
             "-I" + outputConcFile,
@@ -660,7 +659,7 @@ class HYSPLITDispersion(Dispersion):
             "-D1", # Debug flag
             "-L-1" # Lx is x layers. x=-1 for all layers...breaks KML output for multiple layers
             )
-
+        
         if not os.path.exists(outputFile):
             raise AssertionError("Unable to convert HYSPLIT concentration file to NetCDF format")
 
@@ -673,7 +672,7 @@ class HYSPLITDispersion(Dispersion):
         dispersionData["hours"] = hoursToRun
         fireInfo.dispersion = dispersionData
         self.set_output("fires", fireInfo)
-
+        
         #Archive and output PARDUMP
         if self.config("MAKE_INIT_FILE", bool):
            context.archive_file(context.full_path("PARDUMP"))
@@ -690,7 +689,7 @@ class HYSPLITDispersion(Dispersion):
         #       reductionFactor = 5......4 emission levels
         #       reductionFactor = 10.....2 emission levels
         #       reductionFactor = 20.....1 emission level
-
+        
         # Pull reduction factor from user input
         reductionFactor = self.config("VERTICAL_EMISLEVELS_REDUCTION_FACTOR")
         reductionFactor = int(reductionFactor)
@@ -719,30 +718,30 @@ class HYSPLITDispersion(Dispersion):
             if fireLoc.time_profile is None:
                 self.log.debug("Fire %s has no time profile data; skip...", fireLoc.id)
                 continue
-
+                
             if fireLoc.plume_rise is None:
                 self.log.debug("Fire %s has no plume rise data; skip...", fireLoc.id)
                 continue
-
+                
             if fireLoc.emissions is None:
                 self.log.debug("Fire %s has no emissions data; skip...", fireLoc.id)
                 continue
-
+            
             if fireLoc.emissions.sum("heat") < 1.0e-6:
                 self.log.debug("Fire %s has less than 1.0e-6 total heat; skip...", fireLoc.id)
                 continue
-
+                
             yield fireLoc
-
+        
     def writeEmissions(self, filteredFires, modelStart, hoursToRun, emissionsFile, reductionFactor, num_quantiles):
-        # Note: HYSPLIT can accept concentrations in any units, but for
-        # consistency with CALPUFF and other dispersion models, we convert to
+        # Note: HYSPLIT can accept concentrations in any units, but for 
+        # consistency with CALPUFF and other dispersion models, we convert to 
         # grams in the emissions file.
         GRAMS_PER_TON = 907184.74
-
+        
         # Conversion factor for fire size
         SQUARE_METERS_PER_ACRE = 4046.8726
-
+        
         # A value slightly above ground level at which to inject smoldering
         # emissions into the model.
         SMOLDER_HEIGHT = self.config("SMOLDER_HEIGHT", float)
@@ -751,34 +750,34 @@ class HYSPLITDispersion(Dispersion):
             # HYSPLIT skips past the first two records, so these are for comment purposes only
             emis.write("emissions group header: YYYY MM DD HH QINC NUMBER\n")
             emis.write("each emission's source: YYYY MM DD HH MM DUR_HHMM LAT LON RATE AREA HEAT\n")
-
+            
             # Loop through the timesteps
             for hour in range(hoursToRun):
                 dt = modelStart + timedelta(hours=hour)
                 dt_str = dt.strftime("%y %m %d %H")
-
+                
                 num_fires = len(filteredFires)
                 #num_heights = 21 # 20 quantile gaps, plus ground level
                 num_heights = num_quantiles + 1
                 num_sources = num_fires * num_heights
-
+                
                 # TODO: What is this and what does it do?
                 # A reasonable guess would be that it means a time increment of 1 hour
                 qinc = 1
-
+                
                 # Write the header line for this timestep
                 emis.write("%s %02d %04d\n" % (dt_str, qinc, num_sources))
 
                 noEmis = 0
-
+                
                 # Loop through the fire locations
                 for fireLoc in filteredFires:
                     dummy = False
-
+                    
                     # Get some properties from the fire location
                     lat = fireLoc.latitude
                     lon = fireLoc.longitude
-
+                    
                     # Figure out what index (h) to use into our hourly arrays of data,
                     # based on the hour in our outer loop and the fireLoc's available
                     # data.
@@ -786,7 +785,7 @@ class HYSPLITDispersion(Dispersion):
                     padding_hours = ((padding.days * 86400) + padding.seconds) / 3600
                     num_hours = min(len(fireLoc.emissions.heat), len(fireLoc.plume_rise.hours))
                     h = hour - padding_hours
-
+                    
                     # If we don't have real data for the given timestep, we apparently need
                     # to stick in dummy records anyway (so we have the correct number of sources).
 
@@ -794,7 +793,7 @@ class HYSPLITDispersion(Dispersion):
                         self.log.debug("Fire %s has no emissions for hour %s", fireLoc.id, hour)
                         noEmis += 1
                         dummy = True
-
+                        
                     area_meters = 0.0
                     smoldering_fraction = 0.0
                     pm25_injected = 0.0
@@ -803,24 +802,24 @@ class HYSPLITDispersion(Dispersion):
                         # convert it from acres to square meters.
                         area = fireLoc.area * fireLoc.time_profile.area_fract[h]
                         area_meters = area * SQUARE_METERS_PER_ACRE
-
+                        
                         smoldering_fraction = fireLoc.plume_rise.hours[h].smoldering_fraction
                         # Total PM2.5 emitted at this timestep (grams)
                         pm25_emitted = fireLoc.emissions.pm25[h].sum() * GRAMS_PER_TON
                         # Total PM2.5 smoldering (not lofted in the plume)
                         pm25_injected = pm25_emitted * smoldering_fraction
-
+                        
                     entrainment_fraction = 1.0 - smoldering_fraction
-
+                    
                     # We don't assign any heat, so the PM2.5 mass isn't lofted
                     # any higher.  This is because we are assigning explicit
                     # heights from the plume rise.
                     heat = 0.0
-
+                    
                     # Inject the smoldering fraction of the emissions at ground level
                     # (SMOLDER_HEIGHT represents a value slightly above ground level)
                     height_meters = SMOLDER_HEIGHT
-
+                    
                     # Write the smoldering record to the file
                     record_fmt = "%s 00 0100 %8.4f %9.4f %6.0f %7.2f %7.2f %15.2f\n"
                     emis.write(record_fmt % (dt_str, lat, lon, height_meters, pm25_injected, area_meters, heat))
@@ -829,15 +828,15 @@ class HYSPLITDispersion(Dispersion):
                     for pct in range(0, 100, reductionFactor*5):
                         height_meters = 0.0
                         pm25_injected = 0.0
-
+                                               
                         if not dummy:
                             # Loop through the heights (20 quantiles of smoke density)
-                            # For the unreduced case, we loop through 20 quantiles, but we have
-                            # 21 quantile-edge measurements.  So for each
-                            # quantile gap, we need to find a point halfway
+                            # For the unreduced case, we loop through 20 quantiles, but we have 
+                            # 21 quantile-edge measurements.  So for each 
+                            # quantile gap, we need to find a point halfway 
                             # between the two edges and inject 1/20th of the
                             # total emissions there.
-
+                            
                             # KJC optimization...
                             # Reduce the number of vertical emission levels by a reduction factor
                             # and place the appropriate fraction of emissions at each level.
@@ -854,32 +853,32 @@ class HYSPLITDispersion(Dispersion):
                             pm25_entrained = pm25_emitted * entrainment_fraction
                             # Inject the proper fraction of the entrained PM2.5 in each quantile gap.
                             #pm25_injected = pm25_entrained * 0.05  # 1/20 = 0.05
-                            pm25_injected = pm25_entrained / float(num_quantiles)
+                            pm25_injected = pm25_entrained * (float(reductionFactor)/float(num_quantiles))
 
                         # Write the record to the file
                         emis.write(record_fmt % (dt_str, lat, lon, height_meters, pm25_injected, area_meters, heat))
 
                 if noEmis > 0:
                     self.log.debug("%d of %d fires had no emissions for hour %d", noEmis, num_fires, hour)
-
+    
     def writeControlFile(self, filteredFires, metInfo, modelStart, hoursToRun, controlFile, concFile, num_quantiles):
         num_fires = len(filteredFires)
         #num_heights = 21 # 20 quantile gaps, plus ground level
         num_heights = num_quantiles + 1  # number of quantiles used, plus ground level
         num_sources = num_fires * num_heights
-
-        # An arbitrary height value.  Used for the default source height
-        # in the CONTROL file.  This can be anything we want, because
+        
+        # An arbitrary height value.  Used for the default source height 
+        # in the CONTROL file.  This can be anything we want, because 
         # the actual source heights are overridden in the EMISS.CFG file.
         sourceHeight = 15.0
-
+        
         verticalMethod = getVerticalMethod(self)
-
+            
         # Height of the top of the model domain
         modelTop = self.config("TOP_OF_MODEL_DOMAIN", float)
-
+        
         modelEnd = modelStart + timedelta(hours=hoursToRun)
-
+        
         # Build the vertical Levels string
         verticalLevels = self.config("VERTICAL_LEVELS")
         levels = [int(x) for x in verticalLevels.split()]
@@ -895,7 +894,7 @@ class HYSPLITDispersion(Dispersion):
         #centerLon = metInfo.met_domain_info.lonC
         centerLat = float(metInfo.met_domain_info.lat_max + metInfo.met_domain_info.lat_min) / 2.0
         centerLon = float(metInfo.met_domain_info.lon_max + metInfo.met_domain_info.lon_min) / 2.0
-        widthLon = float(metInfo.met_domain_info.lon_max - metInfo.met_domain_info.lon_min)
+        widthLon = float(metInfo.met_domain_info.lon_max - metInfo.met_domain_info.lon_min) 
         heightLat = float(metInfo.met_domain_info.lat_max - metInfo.met_domain_info.lat_min)
         spacingLon = widthLon / metInfo.met_domain_info.nxCRS
         spacingLat = heightLat / metInfo.met_domain_info.nyCRS
@@ -946,7 +945,7 @@ class HYSPLITDispersion(Dispersion):
                 self.log.debug("Need at least two FIRE_INTERVALS...grid spacing will not be adjusted")
 
             # Increase the grid spacing depending on number of fires
-            i = 0
+            i = 0    
             numBins = len(intervals)
             rangeSpacingLat = (maxSpacingLat - minSpacingLat)/(numBins - 1)
             rangeSpacingLon = (maxSpacingLon - minSpacingLon)/(numBins - 1)
@@ -961,31 +960,31 @@ class HYSPLITDispersion(Dispersion):
         with open(controlFile, "w") as f:
             # Starting time (year, month, day hour)
             f.write(modelStart.strftime("%y %m %d %H") + "\n")
-
+            
             # Number of sources
             f.write("%d\n" % num_sources)
-
+            
             # Source locations
             for fireLoc in filteredFires:
                 for height in range(num_heights):
                     f.write("%9.3f %9.3f %9.3f\n" % (fireLoc.latitude, fireLoc.longitude, sourceHeight))
-
+                    
             # Total run time (hours)
             f.write("%04d\n" % hoursToRun)
-
+            
             # Method to calculate vertical motion
             f.write("%d\n" % verticalMethod)
-
+            
             # Top of model domain
             f.write("%9.1f\n" % modelTop)
-
+            
             # Number of input data grids (met files)
             f.write("%d\n" % len(metInfo.files))
             # Directory for input data grid and met file name
             for info in metInfo.files:
                 f.write("./\n")
                 f.write("%s\n" % os.path.basename(info.filename))
-
+            
             # Number of pollutants = 1 (only modeling PM2.5 for now)
             f.write("1\n")
             # Pollutant ID (4 characters)
@@ -996,84 +995,84 @@ class HYSPLITDispersion(Dispersion):
             f.write(" %9.3f\n" % hoursToRun)
             # Source release start time (year, month, day, hour, minute)
             f.write("%s\n" % modelStart.strftime("%y %m %d %H %M"))
-
+            
             # Number of simultaneous concentration grids
             f.write("1\n")
-
-            # NOTE: The size of the output concentration grid is specified
-            # here, but it appears that the ICHEM=4 option in the SETUP.CFG
-            # file may override these settings and make the sampling grid
+            
+            # NOTE: The size of the output concentration grid is specified 
+            # here, but it appears that the ICHEM=4 option in the SETUP.CFG 
+            # file may override these settings and make the sampling grid 
             # correspond to the input met grid instead...
-            # But Ken's testing seems to indicate that this is not the case...
-
+            # But Ken's testing seems to indicate that this is not the case...          
+            
             # Sampling grid center location (latitude, longitude)
             f.write("%9.3f %9.3f\n" % (centerLat, centerLon))
             # Sampling grid spacing (degrees latitude and longitude)
             f.write("%9.3f %9.3f\n" % (spacingLat, spacingLon))
             # Sampling grid span (degrees latitude and longitude)
             f.write("%9.3f %9.3f\n" % (heightLat, widthLon))
-
+            
             # Directory of concentration output file
             f.write("%s/\n" % os.path.dirname(concFile))
             # Filename of concentration output file
             f.write("%s\n" % os.path.basename(concFile))
-
+            
             # Number of vertical concentration levels in output sampling grid
             f.write("%d\n" % numLevels)
             # Height of each sampling level in meters AGL
             f.write("%s\n" % verticalLevels)
-
+            
             # Sampling start time (year month day hour minute)
             f.write("%s\n" % modelStart.strftime("%y %m %d %H %M"))
             # Sampling stop time (year month day hour minute)
             f.write("%s\n" % modelEnd.strftime("%y %m %d %H %M"))
             # Sampling interval (type hour minute)
             f.write("1 1 00\n") # Robert's code has 0 1 0 here while Ken's has 1 1 0.  What does that type field mean?
-
+            
             # Number of pollutants undergoing deposition
             f.write("1\n") # only modeling PM2.5 for now
-
+            
             # Particle diameter (um), density (g/cc), shape
             f.write("1.0 1.0 1.0\n")
-
-            # Dry deposition:
-            #    deposition velocity (m/s),
+            
+            # Dry deposition: 
+            #    deposition velocity (m/s), 
             #    molecular weight (g/mol),
-            #    surface reactivity ratio,
+            #    surface reactivity ratio, 
             #    diffusivity ratio,
             #    effective Henry's constant
             f.write("0.0 0.0 0.0 0.0 0.0\n")
-
+            
             # Wet deposition (gases):
             #     actual Henry's constant (M/atm),
             #     in-cloud scavenging ratio (L/L),
             #     below-cloud scavenging coefficient (1/s)
             f.write("0.0 0.0 0.0\n")
-
+            
             # Radioactive decay half-life (days)
             f.write("0.0\n")
-
+            
             # Pollutant deposition resuspension constant (1/m)
             f.write("0.0\n")
 
     def writeSetupFile(self, filteredFires, modelStart, emissionsFile, setupFile, num_quantiles, ninit_val):
         # Advanced setup options
-        # adapted from Robert's HysplitGFS Perl script
-
+        # adapted from Robert's HysplitGFS Perl script        
+        
         khmax_val = int(self.config("KHMAX"))
         ndump_val = int(self.config("NDUMP"))
         ncycl_val = int(self.config("NCYCL"))
         dump_datetime = modelStart + timedelta(hours=ndump_val)
-
+        
         num_fires = len(filteredFires)
         num_heights = num_quantiles + 1
         num_sources = num_fires * num_heights
-
+        
         max_particles = num_sources * 1000
-
+        
         with open(setupFile, "w") as f:
             f.write("&SETUP\n")
-
+            
             # ichem: i'm only really interested in ichem = 4 in which case it causes
             #        the hysplit concgrid to be roughly the same as the met grid
             # -- But Ken says it may not work as advertised...
@@ -1093,7 +1092,7 @@ class HYSPLITDispersion(Dispersion):
             # numpar: number of particles (or puffs) permited than can be released
             #         during one time step
             f.write("  NUMPAR = %d,\n" % num_sources)
-
+            
             # khmax: maximum particle duration in terms of hours after relase
             f.write("  KHMAX = %d,\n" % khmax_val)
 
@@ -1119,9 +1118,9 @@ class HYSPLITDispersion(Dispersion):
 
             # poutf: particle output/dump file
             if self.config("MAKE_INIT_FILE", bool):
-                f.write("  POUTF = \"PARDUMP\",\n")
+                f.write("  POUTF = \"PARDUMP\",\n") 
                 self.log.info("Dumping particles to PARDUMP starting at %s every %s hours" % (dump_datetime, ncycl_val))
-
+                  
             # ndump: when/how often to dump a poutf file negative values indicate to
             #        just one  create just one 'restart' file at abs(hours) after the
             #        model start
@@ -1130,13 +1129,13 @@ class HYSPLITDispersion(Dispersion):
 
             # ncycl: set the interval at which time a pardump file is written after the
             #        1st file (which is first created at T = ndump hours after the
-            #        start of the model simulation
+            #        start of the model simulation 
             if self.config("MAKE_INIT_FILE", bool):
                 f.write("  NCYCL = %d,\n" % ncycl_val)
 
             # efile: the name of the emissions info (used to vary emission rate etc (and
             #        can also be used to change emissions time
             f.write("  EFILE = \"%s\",\n" % os.path.basename(emissionsFile))
-
+            
             f.write("&END\n")
 #

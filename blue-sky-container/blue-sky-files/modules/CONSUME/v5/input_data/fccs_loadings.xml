@@ -4,70 +4,6 @@
 		<generator_version>2.2</generator_version>
 		<date_generated>12/13/2011</date_generated>
 	</generator_info>
-   <FCCS>
-        <fuelbed_number>0</fuelbed_number>
-        <site_name>Default Unknown Fuel Type</site_name>
-        <site_description>fuelbed 0</site_description>
-        <cover_type>125</cover_type>
-        <ecoregion>340,330</ecoregion>
-        <vegetation_form>2</vegetation_form>
-        <natural_fire_regime>4</natural_fire_regime>
-        <efg_natural>8</efg_natural>
-        <efg_activity>3</efg_activity>
-        <overstory>0.0</overstory>
-        <midstory>0.0</midstory>
-        <understory>0.0</understory>
-        <snags_C1Foliage>0.0</snags_C1Foliage>
-        <snags_C1woFoliage>0.0</snags_C1woFoliage>
-        <snags_C1Wood>0.0</snags_C1Wood>
-        <snags_C2>0.0</snags_C2>
-        <snags_C3>0.0</snags_C3>
-        <g_DuffDep_Upper>0.0</g_DuffDep_Upper>
-        <g_DuffDep_Upper_perc>0.0</g_DuffDep_Upper_perc>
-        <g_DuffDerivation_Upper>0.0</g_DuffDerivation_Upper>
-        <g_DuffDep_Lower>0.0</g_DuffDep_Lower>
-        <g_DuffDep_Lower_perc>0.0</g_DuffDep_Lower_perc>
-        <g_DuffDerivation_Lower>0.0</g_DuffDerivation_Lower>
-        <g_BasLoading>0.0</g_BasLoading>
-        <g_SMLoading>0.0</g_SMLoading>
-        <nw_Primary>0.0</nw_Primary>
-        <nw_Primary_perc_live>0.0</nw_Primary_perc_live>
-        <nw_Secondary>0.0</nw_Secondary>
-        <nw_Secondary_perc_live>0.0</nw_Secondary_perc_live>
-        <shrubs_Primary>2.2</shrubs_Primary>
-        <shrubs_Primary_perc_live>0.0</shrubs_Primary_perc_live>
-        <shrubs_Secondary>0.0</shrubs_Secondary>
-        <shrubs_Secondary_perc_live>0.0</shrubs_Secondary_perc_live>
-        <w_Rotten_3_9>1.0</w_Rotten_3_9>
-        <w_Rotten_9_20>0.0</w_Rotten_9_20>
-        <w_Rotten_GT20>0.0</w_Rotten_GT20>
-        <w_Sound_Sml_0_25>0.5</w_Sound_Sml_0_25>
-        <w_Sound_Sml>0.25</w_Sound_Sml>
-        <w_Sound_1_3>0.25</w_Sound_1_3>
-        <w_Sound_3_9>0.0</w_Sound_3_9>
-        <w_Sound_9_20>0.0</w_Sound_9_20>
-        <w_Sound_GT20>0.0</w_Sound_GT20>
-        <w_Sound_Sml>0.0</w_Sound_Sml>
-        <w_Sound_Sml_0_25>0.0</w_Sound_Sml_0_25>
-        <w_Stump_Sound>0.0</w_Stump_Sound>
-        <w_Stump_Rotten>0.0</w_Stump_Rotten>
-        <w_Stump_Lightered>0.0</w_Stump_Lightered>
-        <litterDep>1.0</litterDep>
-        <litterDep_perc>0.0</litterDep_perc>
-        <litterBroadleafDecid_perc>0.0</litterBroadleafDecid_perc>
-        <litterBroadleafEver_perc>0.0</litterBroadleafEver_perc>
-        <litterGrass_perc>0.0</litterGrass_perc>
-        <litterLongNeedle_perc>0.0</litterLongNeedle_perc>
-        <litterOtherConf_perc>0.0</litterOtherConf_perc>
-        <litterPalmFrond_perc>0.0</litterPalmFrond_perc>
-        <litterShortNeedle_perc>0.0</litterShortNeedle_perc>
-        <lichenDep>0.0</lichenDep>
-        <lichenDep_perc>0.0</lichenDep_perc>
-        <mossDep>0.0</mossDep>
-        <mossDep_perc>0.0</mossDep_perc>
-        <mossType>0</mossType>
-        <ladderFuels>0.0</ladderFuels>
-   </FCCS>
 	<FCCS>
 		<fuelbed_number>1</fuelbed_number>
 		<site_name>Black cottonwood -- Douglas-fir -- quaking aspen riparian forest</site_name>
@@ -39801,7 +39737,7 @@
    </FCCS>
    <FCCS>
         <fuelbed_number>900</fuelbed_number>
-        <site_name>Default Unknown Fuel Type</site_name>
+        <site_name>fuelbed 900</site_name>
         <site_description>fuelbed 900</site_description>
         <cover_type>125</cover_type>
         <ecoregion>340,330</ecoregion>
@@ -39809,59 +39745,57 @@
         <natural_fire_regime>4</natural_fire_regime>
         <efg_natural>8</efg_natural>
         <efg_activity>3</efg_activity>
-        <overstory>0.0</overstory>
-        <midstory>0.0</midstory>
-        <understory>0.0</understory>
+        <overstory>5.634922</overstory>
+        <midstory>1.4662294</midstory>
+        <understory>0.17249759</understory>
         <snags_C1Foliage>0.0</snags_C1Foliage>
-        <snags_C1woFoliage>0.0</snags_C1woFoliage>
+        <snags_C1woFoliage>30.054573</snags_C1woFoliage>
         <snags_C1Wood>0.0</snags_C1Wood>
-        <snags_C2>0.0</snags_C2>
-        <snags_C3>0.0</snags_C3>
-        <g_DuffDep_Upper>0.0</g_DuffDep_Upper>
-        <g_DuffDep_Upper_perc>0.0</g_DuffDep_Upper_perc>
-        <g_DuffDerivation_Upper>0.0</g_DuffDerivation_Upper>
-        <g_DuffDep_Lower>0.0</g_DuffDep_Lower>
-        <g_DuffDep_Lower_perc>0.0</g_DuffDep_Lower_perc>
-        <g_DuffDerivation_Lower>0.0</g_DuffDerivation_Lower>
+        <snags_C2>0.32345846</snags_C2>
+        <snags_C3>0.32345846</snags_C3>
+        <g_DuffDep_Upper>0.5</g_DuffDep_Upper>
+        <g_DuffDep_Upper_perc>70.0</g_DuffDep_Upper_perc>
+        <g_DuffDerivation_Upper>1.0</g_DuffDerivation_Upper>
+        <g_DuffDep_Lower>0.2</g_DuffDep_Lower>
+        <g_DuffDep_Lower_perc>70.0</g_DuffDep_Lower_perc>
+        <g_DuffDerivation_Lower>3.0</g_DuffDerivation_Lower>
         <g_BasLoading>0.0</g_BasLoading>
         <g_SMLoading>0.0</g_SMLoading>
-        <nw_Primary>0.0</nw_Primary>
-        <nw_Primary_perc_live>0.0</nw_Primary_perc_live>
+        <nw_Primary>0.020000001</nw_Primary>
+        <nw_Primary_perc_live>70.0</nw_Primary_perc_live>
         <nw_Secondary>0.0</nw_Secondary>
         <nw_Secondary_perc_live>0.0</nw_Secondary_perc_live>
-        <shrubs_Primary>2.2</shrubs_Primary>
-        <shrubs_Primary_perc_live>0.0</shrubs_Primary_perc_live>
+        <shrubs_Primary>0.015330793</shrubs_Primary>
+        <shrubs_Primary_perc_live>99.0</shrubs_Primary_perc_live>
         <shrubs_Secondary>0.0</shrubs_Secondary>
         <shrubs_Secondary_perc_live>0.0</shrubs_Secondary_perc_live>
-        <w_Rotten_3_9>1.0</w_Rotten_3_9>
-        <w_Rotten_9_20>0.0</w_Rotten_9_20>
+        <w_Rotten_3_9>0.70000005</w_Rotten_3_9>
+        <w_Rotten_9_20>0.4</w_Rotten_9_20>
         <w_Rotten_GT20>0.0</w_Rotten_GT20>
-        <w_Sound_Sml_0_25>0.5</w_Sound_Sml_0_25>
-        <w_Sound_Sml>0.25</w_Sound_Sml>
-        <w_Sound_1_3>0.25</w_Sound_1_3>
-        <w_Sound_3_9>0.0</w_Sound_3_9>
-        <w_Sound_9_20>0.0</w_Sound_9_20>
+        <w_Sound_1_3>2.0</w_Sound_1_3>
+        <w_Sound_3_9>16.0</w_Sound_3_9>
+        <w_Sound_9_20>1.3000001</w_Sound_9_20>
         <w_Sound_GT20>0.0</w_Sound_GT20>
-        <w_Sound_Sml>0.0</w_Sound_Sml>
-        <w_Sound_Sml_0_25>0.0</w_Sound_Sml_0_25>
+        <w_Sound_Sml>1.0</w_Sound_Sml>
+        <w_Sound_Sml_0_25>0.2</w_Sound_Sml_0_25>
         <w_Stump_Sound>0.0</w_Stump_Sound>
-        <w_Stump_Rotten>0.0</w_Stump_Rotten>
+        <w_Stump_Rotten>0.018378168</w_Stump_Rotten>
         <w_Stump_Lightered>0.0</w_Stump_Lightered>
         <litterDep>1.0</litterDep>
-        <litterDep_perc>0.0</litterDep_perc>
+        <litterDep_perc>80.0</litterDep_perc>
         <litterBroadleafDecid_perc>0.0</litterBroadleafDecid_perc>
         <litterBroadleafEver_perc>0.0</litterBroadleafEver_perc>
         <litterGrass_perc>0.0</litterGrass_perc>
         <litterLongNeedle_perc>0.0</litterLongNeedle_perc>
         <litterOtherConf_perc>0.0</litterOtherConf_perc>
         <litterPalmFrond_perc>0.0</litterPalmFrond_perc>
-        <litterShortNeedle_perc>0.0</litterShortNeedle_perc>
+        <litterShortNeedle_perc>100.0</litterShortNeedle_perc>
         <lichenDep>0.0</lichenDep>
         <lichenDep_perc>0.0</lichenDep_perc>
         <mossDep>0.0</mossDep>
         <mossDep_perc>0.0</mossDep_perc>
         <mossType>0</mossType>
-        <ladderFuels>0.0</ladderFuels>
+        <ladderFuels>3.0000002</ladderFuels>
    </FCCS>
    <FCCS>
         <fuelbed_number>901</fuelbed_number>

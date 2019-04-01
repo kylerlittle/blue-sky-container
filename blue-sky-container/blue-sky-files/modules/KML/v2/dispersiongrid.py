@@ -1,7 +1,7 @@
 
 from datetime import datetime, timedelta
 import os
-from osgeo import gdal
+import gdal
 import numpy as np
 
 import matplotlib as mpl
@@ -13,7 +13,7 @@ class BSDispersionGrid:
 
     def __init__(self, filename, param=None, time=None):
         if param:
-            gdal_filename = "NETCDF:%s:%s" % (filename, param)
+            gdal_filename = "NETCDF:%s:%s" % (filename, param)    
         else:
             raise ValueError ("No NetCDF parameter supplied.")
         self.ds = gdal.Open(gdal_filename)
@@ -72,7 +72,7 @@ class BSDispersionGrid:
     def get_datetimes(self, filename):
         """Get Models3 IO/API date-time"""
 
-        gdal_filename = "NETCDF:%s:%s" % (filename, 'TFLAG')
+        gdal_filename = "NETCDF:%s:%s" % (filename, 'TFLAG')    
         time_ds = gdal.Open(gdal_filename)
 
         assert self.num_times == time_ds.RasterCount
@@ -170,7 +170,7 @@ class BSDispersionPlot:
         for c in hex_colors:
             colors.append(mpl.colors.hex2color(c))
 
-        # Create colormap
+        # Create colormap 
         self.colormap = mpl.colors.ListedColormap(colors)
 
         # Set out-of-range values get the lowest and highest colors in the colortable
@@ -238,9 +238,9 @@ class BSDispersionPlot:
         ax = plt.Axes(fig, [0., 0., 1., 1.], )
         ax.set_axis_off()
         fig.add_axes(ax)
-        cnf = plt.contourf(self.xvals,
-                           self.yvals,
-                           raster_data,
+        cnf = plt.contourf(self.xvals, 
+                           self.yvals, 
+                           raster_data, 
                            levels=self.levels,
                            cmap=self.colormap,
                            norm=self.norm,
@@ -252,7 +252,7 @@ class BSDispersionPlot:
                              levels=self.levels,
                              colors='black',
                              norm=self.norm)
-
+            
         plt.savefig(fileroot+'.'+self.export_format, dpi=self.dpi, transparent=True)
 
     def make_colorbar(self, fileroot, label='PM25'):
@@ -333,7 +333,7 @@ def create_dispersion_images(config, verbose=False):
     hours_offset = 0
     grid.calc_aggregate_data(offset=hours_offset)
     count = 0
-    for i in xrange(grid.num_days):
+    for i in xrange(grid.num_days): 
         count += 1
         if _verbose: print "Creating daily aggregate concentration plot %d of %d " % (count, grid.num_days*2)
         fileroot = grid.datetimes[i*24].strftime("daily_maximum_%Y%m%d")
@@ -344,7 +344,7 @@ def create_dispersion_images(config, verbose=False):
         if _verbose: print "Creating daily aggregate concentration plot %d of %d " % (count, grid.num_days*2)
         fileroot = grid.datetimes[i*24].strftime("daily_average_%Y%m%d")
         fileroot = os.path.join(outdir, fileroot)
-        plot.make_contour_plot(grid.avg_data[i,layer,:,:], fileroot)
+        plot.make_contour_plot(grid.avg_data[i,layer,:,:], fileroot) 
 
     # Create a color bar to use in overlays
     fileroot = os.path.join(outdir, 'colorbar')
@@ -361,18 +361,18 @@ def create_aquiptpost_images(config, verbose=False):
     section = 'DispersionGridInput'
     infile = config.get(section, "FILENAME")
     parameters = config.get(section, "PARAMETER").split()
-
+    
     # [DispersionGridOutput] configurations
     section = 'DispersionGridOutput'
     outdir = config.get(section, "OUTPUT_DIR")
-
+        
     for parameter in parameters:
-
+      
         grid = BSDispersionGrid(infile, param=parameter)  # dispersion grid instance
-
+        
         section = 'DispersionGridColorMap'
         plot = BSDispersionPlot(dpi=150)  # Create a dispersion plot instance
-
+        
         # Data levels for binning and contouring
         data_levels = [float(s) for s in config.get(section, "DATA_LEVELS").split()]
         pcnt_levels = [float(s) for s in config.get(section, "PERCENT_LEVELS").split()]
@@ -385,40 +385,40 @@ def create_aquiptpost_images(config, verbose=False):
         else:
             levels = data_levels
             units = 'PM25'
-
+        
         # Colormap
         if config.getboolean(section, "DEFINE_RGB"):
             r = [int(s) for s in config.get(section, "RED").split()]
             g = [int(s) for s in config.get(section, "GREEN").split()]
             b = [int(s) for s in config.get(section, "BLUE").split()]
             plot.colormap_from_RGB(r, g, b)
-
+        
         elif config.getboolean(section, "DEFINE_HEX"):
             hex_colors = config.get(section, "HEX_COLORS").split()
             plot.colormap_from_hex(hex_colors)
-
+        
         else:
             raise Exception("Configuration ERROR... ColorMap.DEFINE_RGB or ColorMap.HEX_COLORS must be true.")
-
+        
         # Generate a colormap index based on discrete intervals
         plot.generate_colormap_index(levels)
-
+        
         # X-axis and Y-axis values (longitudes and latitudes)
         plot.set_plot_bounds(grid)
-
+        
         # Create plots
         # Note that grid.data has dimensions of: [time,lay,row,col]
-
+        
         layer = 0  # first layer only
         if _verbose: print "Creating aggregate plot for %s " % (parameter)
         for i in xrange(grid.num_times):
             fileroot = parameter
             fileroot = os.path.join(outdir, fileroot)
             plot.make_contour_plot(grid.data[i,layer,:,:], fileroot)
-
+        
         # Create a color bar to use in overlays
         fileroot = os.path.join(outdir, 'colorbar_'+parameter)
         plot.make_colorbar(fileroot, label=units)
-
+        
     # Return a tuple lon/lat bounding box of the plot
     return (plot.lonmin, plot.latmin, plot.lonmax, plot.latmax)

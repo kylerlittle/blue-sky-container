@@ -1,12 +1,12 @@
 #******************************************************************************
 #
-#  BlueSky Framework - Controls the estimation of emissions, incorporation of
-#                      meteorology, and the use of dispersion models to
+#  BlueSky Framework - Controls the estimation of emissions, incorporation of 
+#                      meteorology, and the use of dispersion models to 
 #                      forecast smoke impacts from fires.
-#  Copyright (C) 2003-2006  USDA Forest Service - Pacific Northwest Wildland
+#  Copyright (C) 2003-2006  USDA Forest Service - Pacific Northwest Wildland 
 #                           Fire Sciences Laboratory
-#  BlueSky Framework - Version 3.5.1
-#  Copyright (C) 2007-2009  USDA Forest Service - Pacific Northwest Wildland Fire
+#  BlueSky Framework - Version 3.5.1    
+#  Copyright (C) 2007-2009  USDA Forest Service - Pacific Northwest Wildland Fire 
 #                      Sciences Laboratory and Sonoma Technology, Inc.
 #                      All rights reserved.
 #
@@ -30,15 +30,15 @@ class ColumnSpecificRecord(object):
     has_newline = True
     def __init__(self):
         object.__setattr__(self, "data", dict())
-
+    
     def __setattr__(self, key, value):
         object.__getattribute__(self, "data")[key] = value
-
+        
     def __getattr__(self, key):
         if key.startswith('_'):
             raise AttributeError(key)
         return object.__getattribute__(self, "data")[key]
-
+    
     def __str__(self):
         outstr = ""
         for (fieldlen, name, datatype) in self.columndefs:
@@ -169,41 +169,41 @@ class PTHOURRecord(ColumnSpecificRecord):
                    (  8, "DAYTOT",  float),
                    (  1, "-dummy-", str),
                    ( 10, "SCC",     str) ]
-
-
+    
+    
 class OutputSMOKEReadyFiles(Process):
     """ Output SMOKE-ready emissions files """
     _version_ = "1.0.0"
-
+    
     def init(self):
         self.declare_input("fires", "FireInformation")
         #self.declare_output("fires", "FireInformation")
-
+    
     def run(self, context):
         # Collect our inputs
         fireInfo = self.get_input("fires")
-
+        
         ptinv_filename = os.path.join(
-            self.config("DATA_DIR"),
+            self.config("OUTPUT_DIR"), 
             self.config("SMOKE_PTINV_FILE"))
         ptday_filename = os.path.join(
-            self.config("DATA_DIR"),
+            self.config("OUTPUT_DIR"), 
             self.config("SMOKE_PTDAY_FILE"))
         pthour_filename = os.path.join(
-            self.config("DATA_DIR"),
+            self.config("OUTPUT_DIR"), 
             self.config("SMOKE_PTHOUR_FILE"))
         filedt = self.config("DATE", BSDateTime)
-
+        
         WRITE_PTINV_TOTALS = self.config("WRITE_PTINV_TOTALS", bool)
         WRITE_PTDAY_FILE = self.config("WRITE_PTDAY_FILE", bool)
 
         # The first country in this list will appear in SMOKE file headers
         countryProcessList = [x.strip() for x in self.config("COUNTRY_TO_PROCESS").split(",")]
-
+        
         ptinv_filename = filedt.strftime(ptinv_filename)
         ptday_filename = filedt.strftime(ptday_filename)
         pthour_filename = filedt.strftime(pthour_filename)
-
+        
         # Get open file handles
         ptinv = open(ptinv_filename, 'w')
         pthour = open(pthour_filename, 'w')
@@ -212,9 +212,7 @@ class OutputSMOKEReadyFiles(Process):
         ptinv.write("#IDA\n#PTINV\n#COUNTRY %s\n" % countryProcessList[0])
         ptinv.write("#YEAR %d\n" % filedt.year)
         ptinv.write("#DESC POINT SOURCE BlueSky Framework Fire Emissions\n")
-        #ptinv.write("#DATA PM2_5 PM10 CO NH3 NOX SO2 VOC\n")
-        # add PTOP PBOT LAY1F
-        ptinv.write("#DATA PM2_5 PM10 CO NH3 NOX SO2 VOC PTOP PBOT LAY1F\n")
+        ptinv.write("#DATA PM2_5 PM10 CO NH3 NOX SO2 VOC\n")
 
         if WRITE_PTDAY_FILE:
             # Write PTDAY headers
@@ -222,14 +220,14 @@ class OutputSMOKEReadyFiles(Process):
             ptday.write("#EMS-95\n#PTDAY\n#COUNTRY %s\n" % countryProcessList[0])
             ptday.write("#YEAR %d\n" % filedt.year)
             ptday.write("#DESC POINT SOURCE BlueSky Framework Fire Emissions\n")
-
+        
         # Write PTHOUR headers
         pthour.write("#EMS-95\n#PTHOUR\n#COUNTRY %s\n" % countryProcessList[0])
         pthour.write("#YEAR %d\n" % filedt.year)
         pthour.write("#DESC POINT SOURCE BlueSky Framework Fire Emissions\n")
-
+        
         self.log.info("Writing fire locations to SMOKE-ready files")
-
+        
         # Loop over fire locations
         numFires = 0
         skipNoEmis = 0
@@ -255,20 +253,20 @@ class OutputSMOKEReadyFiles(Process):
                 skipNoFips += 1
                 totalSkip += 1
                 continue
-
+            
             if fireLoc['country'] not in countryProcessList:
                 self.log.debug("Skipping non-%s fire %s..." % (countryProcessList[0],fireLoc['id']))
                 skipNoCountry += 1
                 totalSkip += 1
                 continue
-
+                
             if self.config("SEPARATE_SMOLDER", bool):
                 fireTypes = ("flame", "smolder")
             else:
                 fireTypes = ("total",)
 
             for fireType in fireTypes:
-                # Calculate some vars
+                # Calculate some vars 
                 stid = fireLoc['fips'][0:2]    # State Code
                 cyid = fireLoc['fips'][2:5]    # County Code
                 fcid = fireLoc.uniqueid()      # Facility ID
@@ -287,7 +285,7 @@ class OutputSMOKEReadyFiles(Process):
                 prid = ''                       # Process ID
                 dt = fireLoc['date_time']
                 date = dt.strftime('%m/%d/%y')  # Date
-
+                
                 # Figure out a valid timezone name per SMOKE's timezone list
                 VALID_TIMEZONES = ['GMT','ADT','AST','EDT','EST','CDT','CST','MDT','MST','PDT','PST']
                 try:
@@ -304,13 +302,13 @@ class OutputSMOKEReadyFiles(Process):
                 except IndexError:
                     self.log.debug("Can't get timezone code for %s, guessing EST" % fcid)
                     tzonnam = 'EST'
-
+    
                 num_hours = len(fireLoc["emissions"]["pm25"])
                 start_hour = fireLoc["date_time"].hour
                 num_hours += start_hour
                 num_days = num_hours // 24
                 if num_hours % 24 > 0: num_days += 1
-
+    
                 # Write PTINV record
                 ptinv_rec = PTINVRecord()
                 ptinv_rec.STID = stid
@@ -321,7 +319,7 @@ class OutputSMOKEReadyFiles(Process):
                 ptinv_rec.SCC = scc
                 ptinv_rec.LATC = fireLoc["latitude"]
                 ptinv_rec.LONC = fireLoc["longitude"]
-
+                
                 ptinv_rec_str = str(ptinv_rec)
                 # Default to omitting pollutant records from PTINV, per Steve Reid
                 if WRITE_PTINV_TOTALS:
@@ -337,9 +335,9 @@ class OutputSMOKEReadyFiles(Process):
                         prec.ANN = fireLoc["emissions"].sum(vkey)
                         prec.AVD = fireLoc["emissions"].sum(vkey)
                         ptinv_rec_str += str(prec)
-
+                
                 ptinv.write(ptinv_rec_str + "\n")
-
+                
                 # Write PTDAY records
                 if WRITE_PTDAY_FILE:
                     for var, vkey in [('PM2_5', 'pm25'),
@@ -364,36 +362,36 @@ class OutputSMOKEReadyFiles(Process):
                             ptday_rec.POLID = var        # Pollutant name
                             ptday_rec.DATE = date        # Date
                             ptday_rec.TZONNAM = tzonnam  # Timezone name
-
+                            
                             start_slice = max((24 * d) - start_hour, 0)
                             end_slice = min((24 * (d + 1)) - start_hour, len(fireLoc["emissions"][vkey]))
-
+                            
                             if fireType == "flame":
                                 if isinstance(fireLoc["emissions"][vkey], tuple):
                                     daytot = fireLoc["emissions"][vkey][0]
                                 else:
-                                    daytot = sum(tup.flame for tup in
+                                    daytot = sum(tup.flame for tup in 
                                                  fireLoc["emissions"][vkey][start_slice:end_slice])
                             elif fireType == "smolder":
                                 if isinstance(fireLoc["emissions"][vkey], tuple):
                                     daytot = fireLoc["emissions"][vkey][1] + fireLoc["emissions"][vkey][2]
                                 else:
-                                    daytot = sum((tup.smold + tup.resid) for tup in
+                                    daytot = sum((tup.smold + tup.resid) for tup in 
                                                   fireLoc["emissions"][vkey][start_slice:end_slice])
                             else:
                                 if isinstance(fireLoc["emissions"][vkey], tuple):
                                     daytot = sum(fireLoc["emissions"][vkey])
                                 else:
-                                    daytot = sum([tup.sum() for tup in
+                                    daytot = sum([tup.sum() for tup in 
                                                   fireLoc["emissions"][vkey][start_slice:end_slice]])
-
+                            
                             ptday_rec.DAYTOT = daytot                # Daily total
                             ptday_rec.SCC = scc                      # Source Classification Code
                             ptday.write(str(ptday_rec))
-
-                # Write PTHOUR records
-                for var, vkey in [('PTOP', "percentile_100"),
-                                  ('PBOT', "percentile_000"),
+                
+                # Write PTHOUR records               
+                for var, vkey in [('PTOP', "percentile_100"), 
+                                  ('PBOT', "percentile_000"), 
                                   ('LAY1F', "smoldering_fraction"),
                                   ('PM2_5', 'pm25'),
                                   ('PM10', 'pm10'),
@@ -421,7 +419,7 @@ class OutputSMOKEReadyFiles(Process):
                         pthour_rec.DATE = date        # Date
                         pthour_rec.TZONNAM = tzonnam  # Timezone name
                         pthour_rec.SCC = scc          # Source Classification Code
-
+                           
                         daytot = 0.0
                         for hour in range(24):
                             h = (d * 24) + hour - start_hour
@@ -432,7 +430,7 @@ class OutputSMOKEReadyFiles(Process):
                                 if var in ('PTOP', 'PBOT', 'LAY1F'):
                                     if fireType == "flame":
                                         if var == 'LAY1F':
-                                            value = 0.0001
+                                            value = 0.0
                                         else:
                                             value = fireLoc.plume_rise.hours[h][vkey]
                                     elif fireType == "smolder":
@@ -443,7 +441,7 @@ class OutputSMOKEReadyFiles(Process):
                                     if fireType == "flame":
                                         value = fireLoc["emissions"][vkey][h].flame
                                     elif fireType == "smolder":
-                                        value = (fireLoc["emissions"][vkey][h].smold
+                                        value = (fireLoc["emissions"][vkey][h].smold 
                                                + fireLoc["emissions"][vkey][h].resid)
                                     else:
                                         value = fireLoc["emissions"][vkey][h].sum()
@@ -452,14 +450,14 @@ class OutputSMOKEReadyFiles(Process):
                             except IndexError:
                                 #self.log.debug("IndexError on hour %d for fire %s" % (h, fireLoc["id"]))
                                 setattr(pthour_rec, 'HRVAL' + str(hour+1), 0.0)
-
+                        
                         if var not in ('PTOP', 'PBOT', 'LAY1F'):
                             pthour_rec.DAYTOT = daytot
-
+                        
                         pthour.write(str(pthour_rec))
-
+                    
             numFires += 1
-
+        
         if skipNoEmis > 0:
             self.log.info("Skipped %d fires because they had no emissions", skipNoEmis)
         if skipNoPlume > 0:
@@ -472,10 +470,10 @@ class OutputSMOKEReadyFiles(Process):
             self.log.warn("WARNING: No fires were written to SMOKE-ready files")
         else:
             self.log.info("Successfully wrote %d fires", numFires)
-
+        
         # Clean up
         ptinv.close()
         if WRITE_PTDAY_FILE: ptday.close()
         pthour.close()
         #self.set_output("fires", fireInfo)
-
+        

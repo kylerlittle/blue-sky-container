@@ -1,12 +1,12 @@
 #******************************************************************************
 #
-#  BlueSky Framework - Controls the estimation of emissions, incorporation of
-#                      meteorology, and the use of dispersion models to
+#  BlueSky Framework - Controls the estimation of emissions, incorporation of 
+#                      meteorology, and the use of dispersion models to 
 #                      forecast smoke impacts from fires.
-#  Copyright (C) 2003-2006  USDA Forest Service - Pacific Northwest Wildland
+#  Copyright (C) 2003-2006  USDA Forest Service - Pacific Northwest Wildland 
 #                           Fire Sciences Laboratory
-#  BlueSky Framework - Version 3.5.1
-#  Copyright (C) 2007-2009  USDA Forest Service - Pacific Northwest Wildland Fire
+#  BlueSky Framework - Version 3.5.1    
+#  Copyright (C) 2007-2009  USDA Forest Service - Pacific Northwest Wildland Fire 
 #                      Sciences Laboratory and Sonoma Technology, Inc.
 #                      All rights reserved.
 #
@@ -44,7 +44,7 @@ class FireSizeClass(object):
         self.p_bot_max = p_bot_max
 
 EMPTY_FIRE_CLASS = FireSizeClass(0, 0, 0, 0, 0, 0)
-
+   
 FIRE_CLASSES = [ FireSizeClass(1,    0,   10, 0.40,  160,    0),
                  FireSizeClass(2,   10,  100, 0.60, 2400,  900),
                  FireSizeClass(3,  100, 1000, 0.75, 6400, 2200),
@@ -63,58 +63,51 @@ class WRAPPlumeRise(PlumeRise):
 
     def run(self, context):
         fireInfo = self.get_input("fires")
-        SMOLDERING_FRACTION = self.config("SMOLDERING_FRACTION",float)
-        if SMOLDERING_FRACTION > 1.0:
-            SMOLDERING_FRACTION = 1.0
-
+        
         for fireLoc in fireInfo.locations():
             if fireLoc["fuels"] is None:
                 self.log.debug("Fire %s has no fuel loading; skip...", fireLoc["id"])
                 continue
-
+            
             if fireLoc["plume_rise"] is not None:
                 self.log.debug("Skipping %s because it already has plume rise" % fireLoc)
                 continue
 
             acres = fireLoc["area"]
-            fuel_keys = [ "fuel_1hr", "fuel_10hr", "fuel_100hr", "fuel_1khr",
+            fuel_keys = [ "fuel_1hr", "fuel_10hr", "fuel_100hr", "fuel_1khr", 
                           "fuel_10khr", "fuel_gt10khr", "shrub", "grass", "rot",
                           "duff", "litter" ]
             total_fuel_loading = 0
             for k in fuel_keys:
                 total_fuel_loading += fireLoc["fuels"][k]
-
+                
             if fireLoc["type"] in ("WF", "WFU"):
                 fuel_loading_normalizer = 13.8
             else:
                 fuel_loading_normalizer = 5.0
-
+                            
             virtual_acres = acres * math.sqrt(total_fuel_loading / fuel_loading_normalizer)
-
+            
             plumeRise = construct_type("PlumeRise")
             plumeRise.hours = []
-
+            
             for hour in range(24):
                 # This is the actual plume rise calcuation
                 cls = getFireClassBySize(virtual_acres)
                 be_hour = BUOYANT_EFFICIENCY[hour]
-
+                
                 p_top = (be_hour ** 2) * (cls.be_size ** 2) * cls.p_top_max
                 p_bot = (be_hour ** 2) * (cls.be_size ** 2) * cls.p_bot_max
-
-                # set smoldering fraction. if >- 0.0 set to value give else
-                # leave as default value
                 lay1_frac = 1.0 - (be_hour * cls.be_size)
                 if cls.classnum == 0:
                     lay1_frac = 0.0
-                elif SMOLDERING_FRACTION >= 0.0:
-                    lay1_frac = SMOLDERING_FRACTION
-
-                # Construct a PlumeRiseHour structure from lay1_frac (smoldering_fraction),
+                
+                # Construct a PlumeRiseHour structure from lay1_frac (smoldering_fraction), 
                 # p_bot (plume_bottom_meters), and p_top (plume_top_meters).
                 plumeRiseHour = construct_type("PlumeRiseHour", lay1_frac, p_bot, p_top)
                 plumeRise.hours.append(plumeRiseHour)
-
+                
             fireLoc["plume_rise"] = plumeRise
-
+        
         self.set_output("fires", fireInfo)
+

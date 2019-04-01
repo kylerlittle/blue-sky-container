@@ -1,5 +1,5 @@
 mapID,VEG,1HR,10HR,100HR,1kHR,10kHR,10k+HR,DUFF,GRASS,SHRUB,CANOPY,LITTER,ROT
-0,"Default Unknown Fuel Type",0.5,0.25,0.25,0,0,0,0,0,2.2,0,1,1
+0,Urban,0.5,0.25,0.25,0,0,0,0,0,2.2,0,1,1
 1,"Black cottonwood - Douglas-fir - Quaking aspen",0.2,0.8,3.5,0.5,0.5,0,1.92,0.18,0.72,28.79,1,1
 2,"Western hemlock - Western redcedar - Douglas-fir forest",1,2,4,2,3,6,3,0.13,2.14,21.15,1,1
 5,"Douglas-fir - White fir forest",0.5,1.6,3.3,4.3,8.9,3.4,1.08,0.1,2.61,21.12,1,1

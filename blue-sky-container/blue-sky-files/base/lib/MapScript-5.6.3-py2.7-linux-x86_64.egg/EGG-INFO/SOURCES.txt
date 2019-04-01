@@ -1,0 +1,11 @@
+README
+mapscript.py
+mapscript_wrap.c
+setup.cfg
+setup.py
+MapScript.egg-info/PKG-INFO
+MapScript.egg-info/SOURCES.txt
+MapScript.egg-info/dependency_links.txt
+MapScript.egg-info/not-zip-safe
+MapScript.egg-info/top_level.txt
+pygdioctx/pygdioctx.c

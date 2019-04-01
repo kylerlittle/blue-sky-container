@@ -75,7 +75,7 @@ def get_smartfire2(Process, dt, url, stream, export, min_area, info=None):
             # TODO: need to confirm proper time zone handling here
             try:
                 #dt = BSDateTime.strptime(row["date_time"][:16], "%Y-%m-%dT%H:%M", tzinfo=None)
-                dt = BSDateTime.bs_strptime(row["date_time"], tzinfo=None)
+                dt = BSDateTime.bs_strptime(row["date_time"])
             except:
                 Process.log.warn('Error parsing date for id:%s', fireID)
                 Process.log.warn('Skipping...')

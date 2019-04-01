@@ -263,16 +263,16 @@ class FEPSTimeProfile(TimeProfile):
             # Write area measurements (single curve, since we only have one area)
             start_size = 0
             end_size = fireLoc["area"]
-
+            
             new_start_hour = fireLoc["date_time"].hour
-
+            
             if new_start_hour == 0 or new_start_hour > 17:
                 start_hour = 9
                 end_hour = 18
             else:
                 start_hour = new_start_hour
                 end_hour = 18
-
+            
             f.write("0, %d, %f\n" % (start_hour, start_size))
             f.write("0, %d, %f\n" % (end_hour, end_size))
         f.close()
@@ -349,7 +349,7 @@ class FEPSEmissions(Emissions):
 
             # OK, these are our output emissions
             fireLoc["emissions"] = emissions
-
+            
             # If FEPS_EMIS_HAP set to be true, output HAPs emission
             if self.config("FEPS_EMIS_HAP")== "true":
                 ##AddHAP calculation
@@ -384,7 +384,7 @@ class FEPSEmissions(Emissions):
                 fireLoc["metadata"]["hap_248"] = total_consumption * 0.0079 # methylchrysene
                 fireLoc["metadata"]["hap_2381217"] = total_consumption * 0.00905 # methylpyrene,-fluoranthene
                 fireLoc["metadata"]["hap_110543"] = total_consumption * 0.0164025 # n-hexane
-                # replace o,m,p-xylene total with individual isomers
+                # replace o,m,p-xylene total with individual isomers 
                 #fireLoc["metadata"]["hap_1330207"] = total_consumption * 0.242 # o,m,p-xylene
                 fireLoc["metadata"]["hap_108383"] = total_consumption * 0.242 * 0.5907 # m-xylene
                 fireLoc["metadata"]["hap_106423"] = total_consumption * 0.242 * 0.1925 # p-xylene
@@ -392,7 +392,7 @@ class FEPSEmissions(Emissions):
                 fireLoc["metadata"]["hap_198550"] = total_consumption * 0.000856 # perylene
                 fireLoc["metadata"]["hap_85018"] = total_consumption * 0.005 # phenanthrene
                 fireLoc["metadata"]["hap_129000"] = total_consumption * 0.00929 # pyrene
-                fireLoc["metadata"]["hap_108883"] = total_consumption * 0.56825 # toluene
+                fireLoc["metadata"]["hap_108883"] = total_consumption * 0.56825 # toluene            
 
             context.pop_dir()
         self.set_output("fires", fireInfo)
@@ -506,9 +506,6 @@ class FEPSPlumeRise(PlumeRise):
         f.close()
 
     def readPlumeRise(self, id, plumeFile, behave):
-        SMOLDERING_FRACTION = self.config("SMOLDERING_FRACTION",float)
-        if SMOLDERING_FRACTION > 1.0:
-            SMOLDERING_FRACTION = 1.0
         plumeRise = construct_type("PlumeRise")
         plumeRise.hours = []
         heat = []
@@ -520,13 +517,7 @@ class FEPSPlumeRise(PlumeRise):
 
             # Construct a PlumeRiseHour structure from smold_frac, plume_bot,
             # and plume_top.
-            # if SMOLDERING_FRACTION < 0 leave as feps calculated value
-            # otherwise set to constant give by SMOLDERING_FRACTION 
-            # set to 1.0 if greater than 1.0
             smoldering_fraction = float(row["smold_frac"])
-            if SMOLDERING_FRACTION >= 0.0:
-              smoldering_fraction = SMOLDERING_FRACTION
-
             plume_bottom_meters = float(row["plume_bot"])
             plume_top_meters = float(row["plume_top"])
 

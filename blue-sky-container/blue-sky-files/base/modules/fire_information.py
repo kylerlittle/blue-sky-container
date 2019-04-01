@@ -1,12 +1,12 @@
 #******************************************************************************
 #
-#  BlueSky Framework - Controls the estimation of emissions, incorporation of
-#                      meteorology, and the use of dispersion models to
+#  BlueSky Framework - Controls the estimation of emissions, incorporation of 
+#                      meteorology, and the use of dispersion models to 
 #                      forecast smoke impacts from fires.
-#  Copyright (C) 2003-2006  USDA Forest Service - Pacific Northwest Wildland
+#  Copyright (C) 2003-2006  USDA Forest Service - Pacific Northwest Wildland 
 #                           Fire Sciences Laboratory
-#  BlueSky Framework - Version 3.5.1
-#  Copyright (C) 2007-2009  USDA Forest Service - Pacific Northwest Wildland Fire
+#  BlueSky Framework - Version 3.5.1    
+#  Copyright (C) 2007-2009  USDA Forest Service - Pacific Northwest Wildland Fire 
 #                      Sciences Laboratory and Sonoma Technology, Inc.
 #                      All rights reserved.
 #
@@ -30,9 +30,9 @@ from kernel.config import config
 from kernel.log import corelog, SUMMARY
 
 ##############################################################################
-class FuelsData(Structure):
-    """ Fuels information dictionary """
-
+class FuelsData(Structure):    
+    """ Fuels information dictionary """    
+    
     def __init__(self, otherdata=None):
         Structure.__init__(self, otherdata)
         self.setdefault("metadata", dict())
@@ -40,20 +40,20 @@ class FuelsData(Structure):
 ##############################################################################
 class ConsumptionData(Structure):
     """ Consumption information dictionary """
-
+    
     def __init__(self, otherdata=None):
         Structure.__init__(self, otherdata)
 
     def flatten(self, **kwargs):
         rowdict = dict()
-        for x in self.keys():
+        for x in self.keys():            
             rowdict["consumption_" + x] = self[x]
         return rowdict
-
+        
 ##############################################################################
 class EmissionsTuple(Structure):
     """ Emissions flaming/smoldering/residual tuple """
-
+    
     def __init__(self, initvalue=None):
         flame, smold, resid = None, None, None
         if isinstance(initvalue, tuple):
@@ -68,19 +68,19 @@ class EmissionsTuple(Structure):
             self.flame = flame
             self.smold = smold
             self.resid = resid
-
+            
     def __getitem__(self, key):
         if key in (0, 1, 2):
             key = ("flame", "smold", "resid")[key]
         return Structure.__getitem__(self, key)
-
+        
     def __iter__(self):
         for x in ("flame", "smold", "resid"):
             yield self[x]
-
+            
     def sum(self):
         return self.flame + self.smold + self.resid
-
+        
     def flatten(self, **kwargs):
         rowdict = dict()
         for x in ("flame", "smold", "resid"):
@@ -91,7 +91,7 @@ class EmissionsTuple(Structure):
 ##############################################################################
 class EmissionsData(TemporalStructure):
     """ Emissions information dictionary """
-
+    
     def __init__(self, otherdata=None):
         TemporalStructure.__init__(self, otherdata)
 
@@ -107,7 +107,7 @@ class EmissionsData(TemporalStructure):
             return sum(self[key])
         else:
             return self[key]
-
+    
     def flatten(self, **kwargs):
         kwargs["alwaysQualify"] = True
         return TemporalStructure.flatten(self, **kwargs)
@@ -126,11 +126,11 @@ class TimeProfileData(TemporalStructure):
 
     def __init__(self, otherdata=None):
         TemporalStructure.__init__(self, otherdata)
-
+        
 ##############################################################################
 class PlumeRiseHour(Structure):
     """ Plume Rise hourly structure """
-
+    
     def __init__(self, otherdata=None, plume_bottom_meters=None, plume_top_meters=None):
         if plume_top_meters is not None and plume_bottom_meters is not None:
             smoldering_fraction = otherdata
@@ -138,14 +138,14 @@ class PlumeRiseHour(Structure):
             self.smoldering_fraction = smoldering_fraction
             self.percentile_000 = plume_bottom_meters
             self.percentile_100 = plume_top_meters
-
+            
             interp_percentile = lambda p : (plume_bottom_meters + ((plume_top_meters - plume_bottom_meters) / 100.0) * p)
             for p in range(5, 100, 5):
                 self["percentile_%03d" % p] = interp_percentile(p)
-
+           
         else:
             Structure.__init__(self, otherdata)
-
+        
 ##############################################################################
 class FireLocationData(TemporalStructure):
     """ Fire information at a single, atomic location """
@@ -156,10 +156,10 @@ class FireLocationData(TemporalStructure):
         else:
             TemporalStructure.__init__(self)
             if otherdata is not None:
-                self["id"] = otherdata
+                self["id"] = otherdata                
             else:
                 self["id"] = "UNKNOWN"
-        # Clean up ID field.  Removes non-word chars and changes to
+        # Clean up ID field.  Removes non-word chars and changes to 
         # all caps.
         self["id"] = re.sub(r"\W+", "", str(self["id"])).upper()
         self.setdefault("metadata", dict())
@@ -168,14 +168,14 @@ class FireLocationData(TemporalStructure):
         return "<%s>" % self.__str__()
 
     def __str__(self):
-        return "FireLocationData: %s" % self["id"]
-
+        return "FireLocationData: %s" % self["id"]  
+        
     def uniqueid(self):
         if self["date_time"] is None:
             return self["id"]
         run_day = (self["date_time"] - config.get("DEFAULT", "DATE", asType=BSDateTime)).days
         return "%s.%s" % (self['id'], run_day)
-
+    
     def clone(self):
         clone = type(self)(self["id"])
         for k, v in self.iteritems():
@@ -203,13 +203,13 @@ class FireEventData(Structure):
         self.setdefault("fire_locations", list())
 
     def locations(self):
-        """ Return a COPY of the locations in this event
+        """ Return a COPY of the locations in this event 
 
         This is a safeguard against calling removeLocation() while looping
         over this list.  Because the items in the list are just references to the
         real FireLocationData object instances, this is OK.
         """
-        return self.fire_locations[:]
+        return self.fire_locations[:]    
 
     def removeLocation(self, locationData):
         """ Remove the given location from this event """
@@ -228,7 +228,7 @@ class FireEventData(Structure):
 
     def sum(self, key):
         """ Return the sum of the given key for all FireLocationData instances
-        in this event.  Note: This will only work for objects for which the
+        in this event.  Note: This will only work for objects for which the 
         addition (+) operator is defined.
         """
         return reduce(lambda x, y: x + y, [loc[key] for loc in self.fire_locations])
@@ -238,15 +238,15 @@ _globalDateInfo = None
 
 class DateInfoStructure(Structure):
     """ Structure that contains date/time information about the current run """
-
+    
     def __init__(self, otherdata=None):
         Structure.__init__(self, otherdata)
-
+        
         if self.start_date is None or self.hours_to_run is None:
             self.getGlobalDateInfo()
-        elif any(self[k] is None
-               for k in ("start_date", "hours_to_run",
-                "emissions_offset", "dispersion_offset",
+        elif any(self[k] is None 
+               for k in ("start_date", "hours_to_run", 
+                "emissions_offset", "dispersion_offset", 
                 "emissions_start", "emissions_end",
                 "dispersion_start", "dispersion_end")):
             self.populateDateInfo()
@@ -264,7 +264,7 @@ class DateInfoStructure(Structure):
             emis_offset = disp_offset + config.get("DEFAULT", "EMISSIONS_OFFSET", asType=int)
         else:
             emis_offset = disp_offset
-
+        
         dateInfo["start_date"] = start_date
         dateInfo["hours_to_run"] = hours_to_run
         dateInfo["emissions_offset"] = emis_offset
@@ -273,46 +273,45 @@ class DateInfoStructure(Structure):
         dateInfo["emissions_end"] = start_date + timedelta(hours=hours_to_run)
         dateInfo["dispersion_start"] = start_date + timedelta(hours=disp_offset)
         dateInfo["dispersion_end"] = start_date + timedelta(hours=hours_to_run)
-
+        
         self.update(dateInfo)
         return dateInfo
-
+            
     def getGlobalDateInfo(self):
         global _globalDateInfo
         if _globalDateInfo is None:
             dateInfo = dict()
             if self.start_date is None:
                 self.start_date = config.get("DEFAULT", "DATE", asType=BSDateTime)
-
+            
             if self.hours_to_run is None:
                 self.hours_to_run = config.get("DEFAULT", "HOURS_TO_RUN", asType=int)
-
+            
             dateInfo = self.populateDateInfo()
 
-            corelog.log(SUMMARY,{"initialization_time": self.start_date.bs_strftime()})
-            corelog.log(SUMMARY,{"emissions_period": {
-                "from": dateInfo["emissions_start"].strftime('%Y%m%d %HZ'),
-                "to": dateInfo["emissions_end"].strftime('%Y%m%d %HZ')}})
-            corelog.log(SUMMARY,{"dispersion_period": {
-                "from": dateInfo["dispersion_start"].strftime('%Y%m%d %HZ'),
-                "to": dateInfo["dispersion_end"].strftime('%Y%m%d %HZ')}})
-
+            corelog.log(SUMMARY, "Emissions period: %s to %s", 
+                        dateInfo["emissions_start"].strftime('%Y%m%d %HZ'), 
+                        dateInfo["emissions_end"].strftime('%Y%m%d %HZ'))
+            corelog.log(SUMMARY, "Dispersion period: %s to %s", 
+                        dateInfo["dispersion_start"].strftime('%Y%m%d %HZ'), 
+                        dateInfo["dispersion_end"].strftime('%Y%m%d %HZ'))
+            
             _globalDateInfo = dateInfo
         self.update(_globalDateInfo)
 
 ##############################################################################
 class MetInfo(DateInfoStructure):
     """ Structure that contains information about available meteorological data """
-
+    
     def __init__(self, otherdata=None):
         DateInfoStructure.__init__(self, otherdata)
         self.setdefault("files", list())
         self.setdefault("files_nest", list())
         self.setdefault("metadata", dict())
-
+                    
 ##############################################################################
 class FireInformation(DateInfoStructure):
-    """ The aggregate of one or more FireLocation or FireEvent instances
+    """ The aggregate of one or more FireLocation or FireEvent instances 
         constituting all the fires within the scope of the current BlueSky run. """
 
     def __init__(self, otherdata=None):
@@ -342,9 +341,9 @@ class FireInformation(DateInfoStructure):
             if self.fire_locations is None:
                 self.fire_locations = list()
             for dataList, constructor in (
-                (self.fire_events, get_type_constructor("FireEventData")),
+                (self.fire_events, get_type_constructor("FireEventData")), 
                 (self.fire_locations, get_type_constructor("FireLocationData"))):
-
+                
                 # Construct the subobject if needed
                 if len(dataList) == 0:
                     obj = constructor()
@@ -354,14 +353,14 @@ class FireInformation(DateInfoStructure):
                     continue
                 # Recursively set the value on the subobject
                 found_it = obj.set_value(k, v, **kwargs)
-
+                
                 # If we were able to set a value, keep the object
                 if found_it and len(dataList) == 0:
                     dataList.append(obj)
-
+                    
                 if found_it:
                     return True
-
+                
         # Well, we don't have a key by the given name on this object,
         # but we may be able to set the corresponding value on a subobject
         for key in self.keys():
@@ -377,13 +376,13 @@ class FireInformation(DateInfoStructure):
                     obj = self[key]
                 # Recursively set the value on the subobject
                 found_it = obj.set_value(k, v, **kwargs)
-
+                
                 # If we were able to set a value, keep the object
                 if found_it:
                     self[key] = obj
                     return True
         return found_it
-
+        
     def addLocation(self, locationData):
         assert isinstance(locationData, FireLocationData)
         self["fire_locations"].append(locationData)
@@ -399,7 +398,7 @@ class FireInformation(DateInfoStructure):
     def removeEvent(self, eventData):
         assert isinstance(eventData, FireEventData)
         self["fire_events"].remove(eventData)
-
+    
     def location(self, fire_id, dt):
         """ Returns the given FireLocationData object (or None)"""
         for loc in self["fire_locations"]:
@@ -413,16 +412,16 @@ class FireInformation(DateInfoStructure):
             if e["event_id"] == event_id:
                 return e
         return None
-
+    
     def events(self):
-        """ IMPORTANT: Returns a COPY of the list of events
+        """ IMPORTANT: Returns a COPY of the list of events 
 
         This is a safeguard against calling removeEvent() while looping
         over this list.  Because the items in the list are just references to the
         real FireEventData object instances, this is OK.
         """
         return self["fire_events"][:]
-
+    
     def locations(self):
         """ IMPORTANT: Returns a COPY of the list of locations
 
@@ -431,29 +430,23 @@ class FireInformation(DateInfoStructure):
         real FireEventData object instances, this is OK.
         """
         return self["fire_locations"][:]
-
-    def eventsCount(self):
-        return len(self["fire_events"])
-
-    def locationsCount(self):
-        return len(self["fire_locations"])
-
+    
     def iterLocations(self):
         # Build a mapping of location IDs to event IDs
         if len(self["fire_events"]) > 0:
             eventIDs = dict(reduce(lambda a, b: a + b,
-                        [[(loc["id"], e["event_id"]) for loc in e.locations()]
+                        [[(loc["id"], e["event_id"]) for loc in e.locations()] 
                          for e in self["fire_events"]]))
         else:
             eventIDs = dict()
-
+        
         for fireLoc in self.locations():
             try:
                 event = self.event(eventIDs[fireLoc["id"]])
             except:
                 event = None
             yield (event, fireLoc)
-
+        
     def addEventLocation(self, fireEvent, fireLoc):
         event = self.event(fireEvent["event_id"])
         if event is None:
@@ -461,8 +454,8 @@ class FireInformation(DateInfoStructure):
             for k in fireEvent.keys():
                 event[k] = fireEvent[k]
             self.addEvent(event)
-
-        loc = self.location(fireLoc["id"], fireLoc["date_time"])
+        
+        loc = self.location(fireLoc["id"], fireLoc["date_time"])                
         if loc is None:
             event.addLocation(fireLoc)
             self.addLocation(fireLoc)

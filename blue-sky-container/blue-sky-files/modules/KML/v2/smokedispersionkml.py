@@ -280,50 +280,50 @@ def build_aquipt_kml(config, grid_bbox, pretty_kml=False, verbose=False):
 
     # Create primary KML object
     kml = pykml.KML()
-
+    
     ###### Create root Document
     root_doc_name = "BSF_Aquipt"
     if met_type: root_doc_name += "_%s" % met_type
     root_doc = pykml.Document().set_name(root_doc_name).set_open(True)
-
+    
     # Create and add style KML to root Document
     location_style_group = _create_style_group('location', os.path.basename(fire_location_icon))
     event_style_group = _create_style_group('event', os.path.basename(fire_event_icon))
     combined_style_group = location_style_group + event_style_group
     for style in combined_style_group:
         root_doc.with_style(style)
-
+    
     # Create and add disclaimer screen overlay KML to root Document
     disclaimer = _create_screen_overlay('Disclaimer', os.path.basename(disclaimer_image),
                                         overlay_x=1.0, overlay_y=1.0, screen_x=1.0, screen_y=1.0)
     root_doc.with_feature(disclaimer)
-
+    
     # Create and add fire information related KML to root Document
     fire_information = _create_fire_info_folder(fire_events)
     root_doc.with_feature(fire_information)
-
+    
     ###### Create and add concentratiom image related KML to root Document
     if 'dispersion' in modes:
         concentration_information = _create_aquipt_concentration_information(dispersion_images, grid_bbox)
         root_doc.with_feature(concentration_information)
-
+        
     # Stick KML root document into primary KML object
     kml.add_element(root_doc)
-
+    
     # FIXME: If possible, skip saving KML file to disk
     # Save temp KML file to disk
     kml_name = 'doc.kml'
     _create_kml_file(kml, kml_name, pretty_kml)
-
+    
     # Create KMZ containing KML file and its various assets
     kmz_assets = [kml_name, disclaimer_image, fire_event_icon, fire_location_icon]
     if 'dispersion' in modes:
         for image in os.listdir(dispersion_image_dir):
             image_path = os.path.join(dispersion_image_dir, image)
             kmz_assets.append(image_path)
-
+    
     _create_kmz(kmz_file, kmz_assets)
-
+    
     # Remove temp KML file from disk
     os.remove(kml_name)
 
@@ -550,7 +550,7 @@ def _create_concentration_information(dispersion_images, legend_name, concentrat
 
 
 def _create_aquipt_concentration_information(param_images, grid_bbox):
-
+    
     # Average Impacts
     name = 'Average Impact'
     images = param_images[AVGIMPACT_IMAGE_PREFIX]['images']
@@ -641,9 +641,9 @@ def _create_aquipt_concentration_folder(name, dispersion_images, legend_images, 
         # Create a nested "parameter" folder to hold the corresponding layer and key images
         parameter_name = image[:image.find('.')]
         parameter_folder = pykml.Folder().set_name(parameter_name).with_feature(image_overlay).with_feature(legend_overlay)
-
+        
         concentration_folder.with_feature(parameter_folder)
-
+                            
     return concentration_folder
 
 

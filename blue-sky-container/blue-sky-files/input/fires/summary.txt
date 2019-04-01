@@ -1,0 +1,10 @@
+BlueSky Framework version 3.5.1 (rev 39130)
+Emissions period: 20120815 08Z to 20120817 08Z
+Dispersion period: 20120815 08Z to 20120817 08Z
+>>>
+>>> ERROR: SmartFire2 request returned zero fires
+>>>    File "base/modules/smartfire2.py", line 202, in run
+>>>      raise Exception("SmartFire2 request returned zero fires")
+>>>
+
+Completed in 0.82 seconds

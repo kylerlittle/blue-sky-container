@@ -1,12 +1,12 @@
 #******************************************************************************
 #
-#  BlueSky Framework - Controls the estimation of emissions, incorporation of
-#                      meteorology, and the use of dispersion models to
+#  BlueSky Framework - Controls the estimation of emissions, incorporation of 
+#                      meteorology, and the use of dispersion models to 
 #                      forecast smoke impacts from fires.
-#  Copyright (C) 2003-2006  USDA Forest Service - Pacific Northwest Wildland
+#  Copyright (C) 2003-2006  USDA Forest Service - Pacific Northwest Wildland 
 #                           Fire Sciences Laboratory
-#  BlueSky Framework - Version 3.5.1
-#  Copyright (C) 2007-2009  USDA Forest Service - Pacific Northwest Wildland Fire
+#  BlueSky Framework - Version 3.5.1    
+#  Copyright (C) 2007-2009  USDA Forest Service - Pacific Northwest Wildland Fire 
 #                      Sciences Laboratory and Sonoma Technology, Inc.
 #                      All rights reserved.
 #
@@ -30,7 +30,7 @@ class FCCS(FuelLoading):
     """ FCCS Fuel Loading Module """
 
     def run(self, context):
-
+        
         #
         # Get fires from input plug
         #
@@ -53,7 +53,7 @@ class FCCS(FuelLoading):
         	FUEL_LOAD_DATA = self.config("FUEL_LOAD_DATA2")
         	FUEL_LOOKUP_CSV = self.config("FUEL_LOOKUP_CSV2")
         	FUEL_LOAD_VARIABLE = self.config("FUEL_LOAD_VARIABLE2")
-        # Alaska dataset
+        # Alaska dataset    
         FUEL_LOAD_DATA_AK = self.config("FUEL_LOAD_DATA_AK")
         FUEL_LOOKUP_CSV_AK = self.config("FUEL_LOOKUP_CSV2")
         FUEL_LOAD_VARIABLE_AK = self.config("FUEL_LOAD_VARIABLE_AK")
@@ -75,11 +75,11 @@ class FCCS(FuelLoading):
         fccsLoadingAK = {}
         for rowAK in csv.DictReader(file(FUEL_LOOKUP_CSV_AK,'r')):
             fccsLoadingAK[int(rowAK["mapID"])] = rowAK
-
+        
         nFires = len(fireInfo.locations())
         nSuccess = 0
         for fireLoc in fireInfo.locations():
-
+        
             fuelInfo = fireLoc["fuels"]
             fccsNumber = None
             fuelLoadingLookup = {}
@@ -105,7 +105,7 @@ class FCCS(FuelLoading):
             if fccsNumber is None or fccsNumber < 0: # or fccsNumber > 291:
                 self.log.debug("No data for %s in contiguous U.S., fccs_number = %s",
                                fireLoc, fccsNumber)
-
+                
                 self.log.debug("Checking Alaska...")
 
                 try:
@@ -114,18 +114,18 @@ class FCCS(FuelLoading):
                 except ValueError, e:
                     self.log.debug("Error: %s for %s", str(e), fireLoc)
                     continue
-
+                
                 if fccsNumber is None or fccsNumber < 0:
                     self.log.debug("No data for %s, fccs_number = %s",
                                fireLoc, fccsNumber)
                     continue
-
+                    
 
             fuelInfo = construct_type("FuelsData")
             fireLoc["fuels"] = fuelInfo
             self.log.debug("%s: FCCS Fuel Loading: %d %s", fireLoc, fccsNumber, fuelLoadingLookup[fccsNumber]["VEG"])
             nSuccess += 1
-
+            
             fuelInfo["metadata"]["fccs_number"] = fccsNumber
 
             fuelInfo["fuel_1hr"] = float(fuelLoadingLookup[fccsNumber]["1HR"])
@@ -141,10 +141,10 @@ class FCCS(FuelLoading):
             fuelInfo["duff"] = float(fuelLoadingLookup[fccsNumber]["DUFF"])
             fuelInfo["litter"] = float(fuelLoadingLookup[fccsNumber]["LITTER"])
             fuelInfo["metadata"]["VEG"] = fuelLoadingLookup[fccsNumber]["VEG"]
-
+        
         self.log.info("Successfully added fuel loadings "
                       "for %d of %d input fires", nSuccess, nFires)
-
+        
         #
         # Set output plug to updated fireInfo
         #

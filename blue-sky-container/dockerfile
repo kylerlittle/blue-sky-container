@@ -14,12 +14,12 @@ RUN apt-get -y install openssh-client
 # Get C shell scripting
 RUN apt-get -y install csh
 
-# Add script which will get all data necessary for the BlueSky Job
-ADD create_bluesky_container.sh /
-
+# Set working directory
 ENV BS_DIR /opt/bluesky/bluesky_3.5.1/
 WORKDIR ${BS_DIR}
-COPY ./blue-sky-files .
+
+# Add blue sky required files to Docker Container
+COPY blue-sky-files/ ./
 
 # Run bash.
 CMD ["/bin/bash"]

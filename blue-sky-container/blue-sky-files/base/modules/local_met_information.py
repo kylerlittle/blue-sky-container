@@ -257,9 +257,6 @@ class ARLToLocalMet(Process):
 
         rh = EVAP / ESAT = (SPHU * PRES / 0.622) / (EXP(21.4-(5351.0/TEMP)))
         """
-        # note: units are a bit odd as defined above....however, using
-        #       pres [Pa], T [K] and sphu [kg/kg] yields RH [%]
-
         if not pressure or not sphu or not temp:
             return None
 
@@ -268,22 +265,8 @@ class ARLToLocalMet(Process):
         #    print sphu[i], pressure[i], temp[i]
         #    rh.append((sphu[i] * pressure[i] / 0.622) / (exp(21.4 - (5351.0 / (temp[i] + 273.15)))))
 
-        # equation assumes specific humidity is in kg/kg
-        #                  pressure is in Pascales
-        #      and         temp is in celcius.
-
-        # local met defines (as in the types.ini files)
-        #           specific humdity in g/kg
-        #           pressure in mbar
-        #    and    temp in celcius
-
-        # below converts sphu to kg/kg, pres to Pa and temp to K
-        sphu_kg_per_kg = map(lambda s: s/1000.0 ,sphu)
-        temp_K         = map(lambda t: t+273.15 ,temp)
-        pres_Pa        = map(lambda p: p*100.0 ,pressure)
- 
-        # returns RH in %
-        return map(lambda s,p,t: (s * p / 0.622) / (exp(21.4 - (5351.0 /t))), sphu_kg_per_kg,pres_Pa,temp_K)
+        return map(lambda s,p,t: (s * p / 0.622) / (exp(21.4 - (5351.0 /(t + 273.15)))), sphu,pressure,temp)
+        #return rh
 
     @staticmethod
     def calc_height(pressure):
@@ -376,15 +359,6 @@ class ARLProfile(object):
 
         return self.hourly_profile
 
-    NEGATIVE_NUMBER_MATCHER = re.compile('([^E])-')
-    def _split_hour_pressure_vals(self, line):
-        # Some values occupy 6 characters, and some 8.  They are for
-        # the most part separated by spaces. The one exception I've
-        # found is when a negative number's '-' is right up against
-        # the value to it's left; so, add an extra space before any
-        # '-' and then split on space
-        return self.NEGATIVE_NUMBER_MATCHER.subn('\\1 -', line)[0].split()
-
     def parse_hourly_text(self, profile):
         """ Parse raw hourly text into a more useful dictionary """
         for hour in profile:
@@ -401,7 +375,7 @@ class ARLProfile(object):
             first_vars.append('pressure_at_surface')
             for var_str in hour[line_numbers[0]].split():
                 first_vars.append(var_str)
-            first_vals = self._split_hour_pressure_vals(hour[line_numbers[1]])
+            first_vals = hour[line_numbers[1]].split()
             for v in xrange(len(first_vars)):
                 vars[first_vars[v]] = []
                 vars[first_vars[v]].append(first_vals[v])
@@ -414,7 +388,7 @@ class ARLProfile(object):
             for v in main_vars:
                 vars[v] = []
             for i in xrange(line_numbers[3], len(hour)):
-                line = self._split_hour_pressure_vals(hour[i])
+                line = hour[i].split()
                 if len(line) > 0:
                     for j in xrange(len(line)):
                         vars[main_vars[j]].append(line[j])
@@ -521,6 +495,7 @@ class Sun(object):
     typical use, calculating the sunrise at the present day:
 
     from datetime import datetime
+    from sunrise import Sun
     s = Sun(lat=49,long=3)
     print s.sunrise(datetime.now())     # prints 'datetime.time(17, 58, 43)'
     print s.sunrise_hr(datetime.now())  # prints '18'

@@ -1,2 +1,2 @@
-docker build . -t blueskydeps
-docker run -it blueskydeps
+docker build . -t blueskycontainer
+docker run -it blueskycontainer

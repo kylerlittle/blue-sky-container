@@ -68,7 +68,6 @@ class OutputKML(Process):
         sect3 = 'DispersionGridOutput'
         config.add_section(sect3)
         config.set(sect3, 'OUTPUT_DIR', os.path.join(self.config('OUTPUT_DIR'), 'images'))
-        config.set(sect3, 'GRID_INFO_JSON', self.config('GRID_INFO_JSON'))
 
         sect4 = 'DispersionGridColorMap'
         if self.config('DEFINE_RGB', bool):
@@ -89,7 +88,6 @@ class OutputKML(Process):
         else:
             self.log.error('DEFINE_RGB or DEFINE_HEX must be set to true.')
         opt2.append('IMAGE_OPACITY_FACTOR')
-        opt2.append('REPROJECT_IMAGES')
         self._create_config_section(config, sect5, opt2)
 
         sect6 = 'SmokeDispersionKMLInput'
@@ -178,7 +176,6 @@ class OutputAquiptKML(Process):
         sect3 = 'DispersionGridOutput'
         config.add_section(sect3)
         config.set(sect3, 'OUTPUT_DIR', os.path.join(self.config('OUTPUT_DIR'), 'images'))
-        config.set(sect3, 'GRID_INFO_JSON', self.config('GRID_INFO_JSON'))
 
         sect4 = 'DispersionGridColorMap'
         if self.config('DEFINE_RGB', bool):
@@ -200,7 +197,6 @@ class OutputAquiptKML(Process):
         else:
             self.log.error('DEFINE_RGB or DEFINE_HEX must be set to true.')
         opt2.append('IMAGE_OPACITY_FACTOR')
-        opt2.append('REPROJECT_IMAGES')
         self._create_config_section(config, sect5, opt2)
 
         sect6 = 'SmokeDispersionKMLInput'
