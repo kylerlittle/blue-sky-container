@@ -1,0 +1,16 @@
+# Logs
+logs
+*.log
+
+# VS Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Mac
+*.icloud
+
+# These are big files we should ignore for git
+./bluesky_3.5.1/output/*
