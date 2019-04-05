@@ -4,7 +4,7 @@ IM_NAME=blueskycontainer
 DOCKER_IMAGE="kylerlittle/broken-tooth:${IM_NAME}"
 
 # Rebuild image
-docker built . -t $IM_NAME
+docker build . -t $IM_NAME
 
 # Tag and share to DockerHub
 docker tag $IM_NAME $DOCKER_IMAGE
