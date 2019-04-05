@@ -19,7 +19,7 @@ ENV BS_DIR /opt/bluesky/bluesky_3.5.1/
 WORKDIR ${BS_DIR}
 
 # Add blue sky required files to Docker Container
-COPY blue-sky-files/ ./
+COPY bluesky_3.5.1 ./
 
 # Run bash.
 CMD ["/bin/bash"]
