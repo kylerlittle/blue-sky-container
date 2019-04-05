@@ -1,0 +1,8 @@
+version: "2.2"
+services:
+    bin:
+        image: blueskydeps
+        command: tail -F htop
+        cpu_count: 1
+        mem_limit: 4gb
+            

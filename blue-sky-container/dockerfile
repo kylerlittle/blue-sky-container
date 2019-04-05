@@ -1,0 +1,25 @@
+FROM ubuntu:16.04
+LABEL maintainer="garrett.rudisill@gmail.com"
+
+RUN apt-get update
+RUN apt-get upgrade -y
+RUN apt-get install htop
+
+ADD package_notes.txt /
+RUN apt-get update && apt-get install $(grep -vE "^\s*#" package_notes.txt  | tr "\n" " ") -y
+
+# Ensure ssh toolkit is installed
+RUN apt-get -y install openssh-client
+
+# Get C shell scripting
+RUN apt-get -y install csh
+
+# Set working directory
+ENV BS_DIR /opt/bluesky/bluesky_3.5.1/
+WORKDIR ${BS_DIR}
+
+# Add blue sky required files to Docker Container
+COPY bluesky_3.5.1 ./
+
+# Run bash.
+CMD ["/bin/bash"]

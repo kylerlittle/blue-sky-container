@@ -1,0 +1,20 @@
+BlueSky Framework version 3.5.1 (rev 39130)
+Emissions period: 20180831 00Z to 20180904 00Z
+Dispersion period: 20180901 00Z to 20180904 00Z
+Provide defaults for missing input fields v3.5.1
+Provide default fuel moisture information v3.5.1
+FireTypeSplitter from package BlueSky v3.5.1
+Persistence from package BlueSky v3.5.1
+Persistence from package BlueSky v3.5.1
+NoGrowth from package BlueSky v3.5.1
+ConsolidateFires from package BlueSky v3.5.1
+FCCS Fuel Loading Module v2
+FireTypeSplitter from package BlueSky v3.5.1
+NoConsumption from package BlueSky v3.5.1
+NoConsumption from package BlueSky v3.5.1
+NoConsumption from package BlueSky v3.5.1
+ConsolidateFires from package BlueSky v3.5.1
+NoTimeProfile from package BlueSky v3.5.1
+NoEmissions from package BlueSky v3.5.1
+NoPlumeRise from package BlueSky v3.5.1
+Completed in 3 minutes 16.21 seconds
