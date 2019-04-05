@@ -1,0 +1,118 @@
+Fri Apr  5 01:52:57 UTC 2019
+WARNING: Module kml_utilities does not declare _bluesky_version_
+WARNING: Module make_aquipt_dispersion_kml does not declare _bluesky_version_
+WARNING: Module smokedispersionkml does not declare _bluesky_version_
+WARNING: Module firedescriptions does not declare _bluesky_version_
+WARNING: Module dispersionimages does not declare _bluesky_version_
+WARNING: Module primitivekml does not declare _bluesky_version_
+WARNING: Module abstractkml does not declare _bluesky_version_
+WARNING: Module dispersiongrid does not declare _bluesky_version_
+WARNING: Module makedispersionkml does not declare _bluesky_version_
+WARNING: Module pykml does not declare _bluesky_version_
+WARNING: Module fuel_consumption does not declare _bluesky_version_
+WARNING: Module emissions_db does not declare _bluesky_version_
+WARNING: Module con_calc_natural does not declare _bluesky_version_
+WARNING: Module con_calc_activity does not declare _bluesky_version_
+WARNING: Module module_locator does not declare _bluesky_version_
+WARNING: Module live_fuel_moisture does not declare _bluesky_version_
+WARNING: Module data_desc does not declare _bluesky_version_
+WARNING: Module fccs_db does not declare _bluesky_version_
+WARNING: Module util_consume does not declare _bluesky_version_
+WARNING: Module named_tuple_collection does not declare _bluesky_version_
+WARNING: Module consume_emissions does not declare _bluesky_version_
+WARNING: Module input_variables does not declare _bluesky_version_
+BlueSky: BlueSky Framework version 3.5.1 (rev 39130)
+BlueSky: Using OUTPUT_DIR: /opt/bluesky/bluesky_3.5.1/output/2018090100.1/
+BlueSky: Using WORK_DIR: /opt/bluesky/bluesky_3.5.1/working/2018090100.1/
+FillDefaultData: Disconnecting Output[FireInformation]: MM5LocalMet.fires from Input[FireInformation]: FillDefaultData.fires
+BlueSky: Emissions period: 20180831 00Z to 20180904 00Z
+BlueSky: Dispersion period: 20180901 00Z to 20180904 00Z
+SmartFire2: Downloading fire data for 2018-08-31 from SmartFire2...
+SmartFire2: Downloading fire data for 2018-09-01 from SmartFire2...
+SmartFire2: Downloading fire data for 2018-09-02 from SmartFire2...
+SmartFire2: Downloading fire data for 2018-09-03 from SmartFire2...
+SmartFire2: Successfully downloaded data for 2155 fire locations
+FillDefaultData: Provide defaults for missing input fields v3.5.1
+FillDefaultData: Earliest fire in data set ignites 24 hours before analysis period
+DefaultFuelMoisture: Provide default fuel moisture information v3.5.1
+GrowthSplit: FireTypeSplitter from package BlueSky v3.5.1
+WildfireGrowth: Persistence from package BlueSky v3.5.1
+WildfireGrowth: Persistence model created 1329 new fire records
+PrescribedFireGrowth: Persistence from package BlueSky v3.5.1
+PrescribedFireGrowth: Persistence model created 4264 new fire records
+OtherFireGrowth: NoGrowth from package BlueSky v3.5.1
+ConsolidateGrowth: ConsolidateFires from package BlueSky v3.5.1
+FCCS: FCCS Fuel Loading Module v2
+FCCS: Successfully added fuel loadings for 4501 of 7748 input fires
+ConsumptionSplit: FireTypeSplitter from package BlueSky v3.5.1
+WildfireConsumption: NoConsumption from package BlueSky v3.5.1
+PrescribedFireConsumption: NoConsumption from package BlueSky v3.5.1
+OtherFireConsumption: NoConsumption from package BlueSky v3.5.1
+ConsolidateConsumption: ConsolidateFires from package BlueSky v3.5.1
+NoTimeProfile: NoTimeProfile from package BlueSky v3.5.1
+NoEmissions: NoEmissions from package BlueSky v3.5.1
+NoPlumeRise: NoPlumeRise from package BlueSky v3.5.1
+StandardFiles: Writing fire locations to standard format file
+StandardFiles: Successfully wrote 7748 fire locations
+BlueSky: Completed in 3 minutes 15.76 seconds
+BlueSky run complete
+Fri Apr  5 01:56:15 UTC 2019
+Fri Apr  5 02:14:11 UTC 2019
+WARNING: Module kml_utilities does not declare _bluesky_version_
+WARNING: Module make_aquipt_dispersion_kml does not declare _bluesky_version_
+WARNING: Module smokedispersionkml does not declare _bluesky_version_
+WARNING: Module firedescriptions does not declare _bluesky_version_
+WARNING: Module dispersionimages does not declare _bluesky_version_
+WARNING: Module primitivekml does not declare _bluesky_version_
+WARNING: Module abstractkml does not declare _bluesky_version_
+WARNING: Module dispersiongrid does not declare _bluesky_version_
+WARNING: Module makedispersionkml does not declare _bluesky_version_
+WARNING: Module pykml does not declare _bluesky_version_
+WARNING: Module fuel_consumption does not declare _bluesky_version_
+WARNING: Module emissions_db does not declare _bluesky_version_
+WARNING: Module con_calc_natural does not declare _bluesky_version_
+WARNING: Module con_calc_activity does not declare _bluesky_version_
+WARNING: Module module_locator does not declare _bluesky_version_
+WARNING: Module live_fuel_moisture does not declare _bluesky_version_
+WARNING: Module data_desc does not declare _bluesky_version_
+WARNING: Module fccs_db does not declare _bluesky_version_
+WARNING: Module util_consume does not declare _bluesky_version_
+WARNING: Module named_tuple_collection does not declare _bluesky_version_
+WARNING: Module consume_emissions does not declare _bluesky_version_
+WARNING: Module input_variables does not declare _bluesky_version_
+BlueSky: BlueSky Framework version 3.5.1 (rev 39130)
+BlueSky: Using OUTPUT_DIR: /opt/bluesky/bluesky_3.5.1/output/2018090100.1/
+BlueSky: Using WORK_DIR: /opt/bluesky/bluesky_3.5.1/working/2018090100.1/
+FillDefaultData: Disconnecting Output[FireInformation]: MM5LocalMet.fires from Input[FireInformation]: FillDefaultData.fires
+BlueSky: Emissions period: 20180831 00Z to 20180904 00Z
+BlueSky: Dispersion period: 20180901 00Z to 20180904 00Z
+SmartFire2: Downloading fire data for 2018-08-31 from SmartFire2...
+SmartFire2: Downloading fire data for 2018-09-01 from SmartFire2...
+SmartFire2: Downloading fire data for 2018-09-02 from SmartFire2...
+SmartFire2: Downloading fire data for 2018-09-03 from SmartFire2...
+SmartFire2: Successfully downloaded data for 2155 fire locations
+FillDefaultData: Provide defaults for missing input fields v3.5.1
+FillDefaultData: Earliest fire in data set ignites 24 hours before analysis period
+DefaultFuelMoisture: Provide default fuel moisture information v3.5.1
+GrowthSplit: FireTypeSplitter from package BlueSky v3.5.1
+WildfireGrowth: Persistence from package BlueSky v3.5.1
+WildfireGrowth: Persistence model created 1329 new fire records
+PrescribedFireGrowth: Persistence from package BlueSky v3.5.1
+PrescribedFireGrowth: Persistence model created 4264 new fire records
+OtherFireGrowth: NoGrowth from package BlueSky v3.5.1
+ConsolidateGrowth: ConsolidateFires from package BlueSky v3.5.1
+FCCS: FCCS Fuel Loading Module v2
+FCCS: Successfully added fuel loadings for 4501 of 7748 input fires
+ConsumptionSplit: FireTypeSplitter from package BlueSky v3.5.1
+WildfireConsumption: NoConsumption from package BlueSky v3.5.1
+PrescribedFireConsumption: NoConsumption from package BlueSky v3.5.1
+OtherFireConsumption: NoConsumption from package BlueSky v3.5.1
+ConsolidateConsumption: ConsolidateFires from package BlueSky v3.5.1
+NoTimeProfile: NoTimeProfile from package BlueSky v3.5.1
+NoEmissions: NoEmissions from package BlueSky v3.5.1
+NoPlumeRise: NoPlumeRise from package BlueSky v3.5.1
+StandardFiles: Writing fire locations to standard format file
+StandardFiles: Successfully wrote 7748 fire locations
+BlueSky: Completed in 3 minutes 16.21 seconds
+BlueSky run complete
+Fri Apr  5 02:17:28 UTC 2019
