@@ -11,6 +11,7 @@ logs
 
 # Mac
 *.icloud
+.DS_Store
 
 # These are big files we should ignore for git
 ./bluesky_3.5.1/output/*
