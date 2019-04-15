@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<kml xmlns='http://earth.google.com/kml/2.1'>
+<Document>
+<Style id="airfire">
+<BalloonStyle>
+    <text>$[description]</text>
+</BalloonStyle>
+<IconStyle>
+   <scale>0.5</scale>
+   <Icon>
+      <href>http://satepsanone.nesdis.noaa.gov/pub/FIRE/HMS/png_logo/FireIcon.png</href>
+   </Icon>
+</IconStyle>
+</Style>
+<Style id="rxfire">
+<BalloonStyle>
+    <text>$[description]</text>
+</BalloonStyle>
+<IconStyle>
+   <scale>0.4</scale>
+   <Icon>
+      <href>http://www.clker.com/cliparts/u/T/e/i/e/G/blue-flame-hi.png</href>
+   </Icon>
+</IconStyle>
+</Style>
+<name>fire_locations.kml</name>
+   <Placemark>
+       <name>RX Event</name>
+           <description><![CDATA[<html lang="en"><b>BlueSky USA Rx Fire Details:</b><br><br> SF11E4007285<br><br>204 acres<br><br>Fuel: Default Unknown Fuel Type<br><br><a href="http://128.208.123.111/smartfire/events/16469f7a-1f00-4d45-87fc-035b7b454eae">View This Fire Report (if still available)</a><br><br><a href="http://128.208.123.111/smartfire/data/hms/fires/20190413">View All BlueSky USA Fire Reports</a></html>]]></description>
+           <styleUrl>#rxfire</styleUrl>
+       <Point>
+           <coordinates>-118.807,46.197,</coordinates>
+       </Point>
+   </Placemark>
+   <Placemark>
+       <name>RX Event</name>
+           <description><![CDATA[<html lang="en"><b>BlueSky USA Rx Fire Details:</b><br><br> SF11E4008389<br><br>188 acres<br><br>Fuel: Default Unknown Fuel Type<br><br><a href="http://128.208.123.111/smartfire/events/64ae62af-b63d-40dc-a45e-216fd4f2adae">View This Fire Report (if still available)</a><br><br><a href="http://128.208.123.111/smartfire/data/hms/fires/20190413">View All BlueSky USA Fire Reports</a></html>]]></description>
+           <styleUrl>#rxfire</styleUrl>
+       <Point>
+           <coordinates>-122.17,40.145,</coordinates>
+       </Point>
+   </Placemark>
+   <Placemark>
+       <name>RX Event</name>
+           <description><![CDATA[<html lang="en"><b>BlueSky USA Rx Fire Details:</b><br><br> SF11E4008171<br><br>34.0 acres<br><br>Fuel: Default Unknown Fuel Type<br><br><a href="http://128.208.123.111/smartfire/events/5a7651e4-beee-404c-af89-8565ca5ee377">View This Fire Report (if still available)</a><br><br><a href="http://128.208.123.111/smartfire/data/hms/fires/20190413">View All BlueSky USA Fire Reports</a></html>]]></description>
+           <styleUrl>#rxfire</styleUrl>
+       <Point>
+           <coordinates>-121.511,41.999,</coordinates>
+       </Point>
+   </Placemark>
+</Document>
+</kml>
